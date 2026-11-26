@@ -1,9 +1,8 @@
 Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' started.
 OrvexReport: update card shown
-Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (61.582 seconds).
+Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (78.627 seconds).
 Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' started.
-OrvexReport: FAIL search field
-Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (51.013 seconds).
+Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (82.049 seconds).
 Test Case '-[OrvexUITests.SmokeTests test3_Screens]' started.
 OrvexReport: ok gate
 OrvexReport: ok mode
@@ -33,12 +32,13 @@ OrvexReport: ok settings
 OrvexReport: ok system
 OrvexReport: ok account
 OrvexReport: ok about
-Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (380.450 seconds).
+OrvexReport: ok search
+Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (433.518 seconds).
 Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' started.
 OrvexReport: ok saved
-Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (16.616 seconds).
+Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (16.184 seconds).
 Test Case '-[OrvexUITests.SmokeTests test5_DarkLight]' started.
-Test Case '-[OrvexUITests.SmokeTests test5_DarkLight]' passed (26.580 seconds).
+Test Case '-[OrvexUITests.SmokeTests test5_DarkLight]' passed (25.444 seconds).
 Test Case '-[OrvexUITests.SmokeTests test6_iPadLike]' started.
-Test Case '-[OrvexUITests.SmokeTests test6_iPadLike]' passed (14.363 seconds).
+Test Case '-[OrvexUITests.SmokeTests test6_iPadLike]' passed (13.636 seconds).
 ** TEST SUCCEEDED **
