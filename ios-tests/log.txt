@@ -1,0 +1,3 @@
+Test Case '-[OrvexUITests.SmokeTests testLaunch]' started.
+Test Case '-[OrvexUITests.SmokeTests testLaunch]' passed (21.924 seconds).
+** TEST SUCCEEDED **

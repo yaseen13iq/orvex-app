@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "EED6FB0A-E273-43C6-B5DE-3DF739543042",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "A08EBAEB-BA87-487A-A12F-389906AC5AA3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "launch_0_E2B88563-CE02-4E39-8D71-985D1333195E.png",
+        "timestamp" : 1795673747.388
+      }
+    ],
+    "testIdentifier" : "SmokeTests/testLaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Orvex/OrvexUITests/SmokeTests/testLaunch"
+  }
+]
