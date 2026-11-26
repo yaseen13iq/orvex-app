@@ -1,60 +1,44 @@
 Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' started.
 OrvexReport: update card shown
-Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (59.445 seconds).
+Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (61.582 seconds).
 Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' started.
-/Users/runner/work/orvex-app/orvex-app/ios/OrvexUITests/SmokeTests.swift:46: error: -[OrvexUITests.SmokeTests test2_Tabs] : XCTAssertTrue failed
-OrvexReport: FAIL tab الموقع
-OrvexReport: FAIL tab الزوار
-OrvexReport: FAIL tab التيليجرام
-OrvexReport: FAIL tab المزيد
-<unknown>:0: error: -[OrvexUITests.SmokeTests test2_Tabs] : Failed to tap Button (Element at index 18446744073709551615): No matches found for Descendants matching type TabBar from input {(
-Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' failed (54.216 seconds).
+OrvexReport: FAIL search field
+Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (51.013 seconds).
 Test Case '-[OrvexUITests.SmokeTests test3_Screens]' started.
-OrvexReport: FAIL no tabs for gate
-OrvexReport: FAIL no tabs for mode
-OrvexReport: FAIL no tabs for plans
-OrvexReport: FAIL no tabs for content
-OrvexReport: FAIL no tabs for texts
-OrvexReport: FAIL no tabs for mood
-OrvexReport: FAIL no tabs for look
-OrvexReport: FAIL no tabs for geo
-OrvexReport: FAIL no tabs for advanced
-OrvexReport: FAIL no tabs for live
-OrvexReport: FAIL no tabs for speed
-OrvexReport: FAIL no tabs for waitlist
-OrvexReport: FAIL no tabs for cast
-OrvexReport: FAIL no tabs for botmsgs
-OrvexReport: FAIL no tabs for inbox
-OrvexReport: FAIL no tabs for notify-send
-OrvexReport: FAIL no tabs for files
-OrvexReport: FAIL no tabs for users
-OrvexReport: FAIL no tabs for monitor
-OrvexReport: FAIL no tabs for history
-OrvexReport: FAIL no tabs for log
-OrvexReport: FAIL no tabs for app-updates
-OrvexReport: FAIL no tabs for app-control
-OrvexReport: FAIL no tabs for widgets
-OrvexReport: FAIL no tabs for settings
-OrvexReport: FAIL no tabs for system
-OrvexReport: FAIL no tabs for account
-OrvexReport: FAIL no tabs for about
-Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (896.471 seconds).
+OrvexReport: ok gate
+OrvexReport: ok mode
+OrvexReport: ok plans
+OrvexReport: ok content
+OrvexReport: ok texts
+OrvexReport: ok mood
+OrvexReport: ok look
+OrvexReport: ok geo
+OrvexReport: ok advanced
+OrvexReport: ok live
+OrvexReport: ok speed
+OrvexReport: ok waitlist
+OrvexReport: ok cast
+OrvexReport: ok botmsgs
+OrvexReport: ok inbox
+OrvexReport: ok notify-send
+OrvexReport: ok files
+OrvexReport: ok users
+OrvexReport: ok monitor
+OrvexReport: ok history
+OrvexReport: ok log
+OrvexReport: ok app-updates
+OrvexReport: ok app-control
+OrvexReport: ok widgets
+OrvexReport: ok settings
+OrvexReport: ok system
+OrvexReport: ok account
+OrvexReport: ok about
+Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (380.450 seconds).
 Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' started.
-/Users/runner/work/orvex-app/orvex-app/ios/OrvexUITests/SmokeTests.swift:74: error: -[OrvexUITests.SmokeTests test4_EditAndSave] : XCTAssertTrue failed
-OrvexReport: FAIL gate option
-OrvexReport: FAIL no save bar
-Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' failed (43.458 seconds).
+OrvexReport: ok saved
+Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (16.616 seconds).
 Test Case '-[OrvexUITests.SmokeTests test5_DarkLight]' started.
-/Users/runner/work/orvex-app/orvex-app/ios/OrvexUITests/SmokeTests.swift:89: error: -[OrvexUITests.SmokeTests test5_DarkLight] : XCTAssertTrue failed
-OrvexReport: FAIL theme mist
-OrvexReport: FAIL theme paper
-OrvexReport: FAIL theme iraqfit
-OrvexReport: FAIL theme obsidian
-Test Case '-[OrvexUITests.SmokeTests test5_DarkLight]' failed (45.440 seconds).
+Test Case '-[OrvexUITests.SmokeTests test5_DarkLight]' passed (26.580 seconds).
 Test Case '-[OrvexUITests.SmokeTests test6_iPadLike]' started.
-/Users/runner/work/orvex-app/orvex-app/ios/OrvexUITests/SmokeTests.swift:101: error: -[OrvexUITests.SmokeTests test6_iPadLike] : XCTAssertTrue failed
-Test Case '-[OrvexUITests.SmokeTests test6_iPadLike]' failed (34.171 seconds).
-Test Suite 'SmokeTests' failed at 2026-11-26 07:12:41.912.
-Test Suite 'OrvexUITests.xctest' failed at 2026-11-26 07:12:41.915.
-Test Suite 'All tests' failed at 2026-11-26 07:12:41.915.
-** TEST FAILED **
+Test Case '-[OrvexUITests.SmokeTests test6_iPadLike]' passed (14.363 seconds).
+** TEST SUCCEEDED **
