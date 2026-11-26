@@ -1,0 +1,76 @@
+name: Build ORVEX iOS
+
+on:
+  push:
+    branches: [main]
+    paths: ['ios/**', '.github/workflows/ios.yml', 'version.properties', 'tools/**']
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: |
+          brew install xcodegen >/dev/null
+          xcodebuild -version
+          xcrun simctl list runtimes | grep -i ios || true
+      - name: Generate project
+        run: cd ios && xcodegen generate
+      - name: Build unsigned IPA
+        shell: bash
+        run: |
+          set -o pipefail
+          VER=$(grep VERSION_NAME version.properties | cut -d= -f2)
+          CODE=$(grep VERSION_CODE version.properties | cut -d= -f2)
+          cd ios
+          xcodebuild -project Orvex.xcodeproj -scheme Orvex -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' \
+            -derivedDataPath "$PWD/dd" MARKETING_VERSION="$VER" CURRENT_PROJECT_VERSION="$CODE" \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee ../ios-build.log | grep -E "error:|warning: .*Orvex|BUILD (SUCCEEDED|FAILED)" || true
+          APP="dd/Build/Products/Release-iphoneos/Orvex.app"
+          test -d "$APP"
+          ls "$APP/PlugIns" || echo "no plugins!"
+          mkdir -p Payload && cp -R "$APP" Payload/
+          zip -qry "../ORVEX-$VER-$CODE.ipa" Payload
+      - name: UI tests on simulator
+        if: success()
+        shell: bash
+        run: |
+          set -o pipefail
+          UDID=$(xcrun simctl list devices available -j | python3 -c "
+          import json,sys
+          d=json.load(sys.stdin)['devices']; best=''
+          for rt,devs in d.items():
+              if 'iOS' not in rt: continue
+              for x in devs:
+                  if x['name'].startswith('iPhone') and 'Pro' in x['name'] and 'Max' not in x['name']: best=x['udid']
+          print(best)")
+          echo "sim $UDID"
+          xcrun simctl boot "$UDID" || true
+          cd ios
+          xcodebuild test -project Orvex.xcodeproj -scheme Orvex -destination "id=$UDID" -derivedDataPath "$PWD/ddt" \
+            -resultBundlePath /tmp/r.xcresult CODE_SIGNING_ALLOWED=NO 2>&1 | tee /tmp/xctest.log | grep -E "error:|Test Case|BUILD|\*\* TEST" || true
+      - name: Publish
+        if: always()
+        shell: bash
+        run: |
+          VER=$(grep VERSION_NAME version.properties | cut -d= -f2)
+          CODE=$(grep VERSION_CODE version.properties | cut -d= -f2)
+          mkdir -p /tmp/out/ios-tests
+          grep -E "error:|BUILD (SUCCEEDED|FAILED)" ios-build.log | head -200 > /tmp/out/ios-build.log || true
+          tail -40 ios-build.log >> /tmp/out/ios-build.log || true
+          grep -E "error:|Test Case|TEST (SUCCEEDED|FAILED)|OrvexReport" /tmp/xctest.log > /tmp/out/ios-tests/log.txt 2>/dev/null || true
+          if [ -d /tmp/r.xcresult ]; then xcrun xcresulttool export attachments --path /tmp/r.xcresult --output-path /tmp/out/ios-tests/shots >/dev/null 2>&1 || true; fi
+          rm -f /tmp/out/*.ipa
+          if ls ORVEX-*.ipa >/dev/null 2>&1; then cp ORVEX-*.ipa /tmp/out/; echo "ok $VER $CODE ${GITHUB_SHA}" > /tmp/out/STATUS; else echo "failed $VER $CODE ${GITHUB_SHA}" > /tmp/out/STATUS; fi
+          bash .github/scripts/publish-builds.sh /tmp/out "ios $VER ($CODE) ${GITHUB_SHA::7}"

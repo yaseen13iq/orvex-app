@@ -1,0 +1,42 @@
+[
+ {
+  "id": "AppIcon",
+  "name": "التوقيع"
+ },
+ {
+  "id": "IconObsidian",
+  "name": "أسود"
+ },
+ {
+  "id": "IconClassic",
+  "name": "كلاسيك"
+ },
+ {
+  "id": "IconWhite",
+  "name": "أبيض"
+ },
+ {
+  "id": "IconMist",
+  "name": "ضباب"
+ },
+ {
+  "id": "IconSilver",
+  "name": "فضي"
+ },
+ {
+  "id": "IconSteel",
+  "name": "فولاذ"
+ },
+ {
+  "id": "IconOutline",
+  "name": "خطوط"
+ },
+ {
+  "id": "IconOutlineLight",
+  "name": "خطوط فاتحة"
+ },
+ {
+  "id": "IconBlueprint",
+  "name": "المخطط"
+ }
+]
