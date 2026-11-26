@@ -137,7 +137,7 @@ struct WaitlistView: View {
                         Text(Fmt.n(r.data["count"])).font(.num(34, .bold)).accessibilityIdentifier("waitCount")
                     }
                     Spacer()
-                    if !r.data["handle"].str.isEmpty { Text("@" + r.data["handle"].str).font(.num(13, .regular)).foregroundStyle(t.mute) }
+                    if !r.data["handle"].str.isEmpty { Text("@" + r.data["handle"].str.trimmingCharacters(in: CharacterSet(charactersIn: "@"))).font(.num(13, .regular)).foregroundStyle(t.mute) }
                 }
             }
             Section {

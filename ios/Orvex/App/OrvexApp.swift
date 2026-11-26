@@ -82,7 +82,7 @@ final class Router: ObservableObject {
             tab = "site"; sitePath = NavigationPath(); if dest != "site" { sitePath.append(dest) }
         case "stats", "live", "speed": tab = "stats"; statsPath = NavigationPath(); if dest != "stats" { statsPath.append(dest) }
         case "telegram", "waitlist", "cast", "botmsgs": tab = "telegram"; tgPath = NavigationPath(); if dest != "telegram" { tgPath.append(dest) }
-        case "search": tab = "search"
+        case "search": tab = "home"; homePath = NavigationPath(); homePath.append("search")
         case "update": if let u = Session.shared.app["update"].object { Session.shared.pendingUpdate = .object(u) }
         default: tab = "more"; morePath = NavigationPath(); morePath.append(dest)
         }

@@ -66,14 +66,14 @@ final class SmokeTests: XCTestCase {
             if b.waitForExistence(timeout: 5) { b.tap(); sleep(2); shot(a, "1\(i)-tab-\(name)") } else { log("FAIL tab \(name)") }
         }
         // البحث
-        let s = a.tabBars.buttons.element(boundBy: a.tabBars.buttons.count - 1)
-        s.tap(); sleep(1)
+        let s = a.buttons["searchBtn"].firstMatch
+        if s.waitForExistence(timeout: 5) { s.tap(); sleep(1) } else { log("FAIL search button") }
         let f = a.searchFields.firstMatch
         if f.waitForExistence(timeout: 5) { f.tap(); f.typeText("باقة"); sleep(3); shot(a, "15-search") } else { log("FAIL search field") }
     }
 
     func test3_Screens() throws {
-        let routes = ["gate", "mode", "plans", "content", "texts", "mood", "look", "geo", "advanced", "live", "speed", "waitlist", "cast", "botmsgs", "inbox", "notify-send", "files", "users", "monitor", "history", "log", "app-updates", "app-control", "widgets", "settings", "system", "account", "about"]
+        let routes = ["gate", "mode", "plans", "content", "texts", "mood", "look", "geo", "advanced", "live", "speed", "waitlist", "cast", "botmsgs", "inbox", "notify-send", "files", "users", "monitor", "history", "log", "app-updates", "app-control", "widgets", "settings", "system", "account", "about", "search"]
         for (i, r) in routes.enumerated() {
             let a = app(route: r); a.launch()
             guard ready(a) else { log("FAIL no tabs for \(r)"); continue }

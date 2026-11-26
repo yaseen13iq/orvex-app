@@ -296,7 +296,7 @@ struct SettingsView: View {
 
                 Section {
                     VStack(alignment: .leading) {
-                        HStack { Text("حجم الخط").font(.ox(15)); Spacer(); Text("\(Int(prefs.d.textScale * 100))%").font(.num(13)) }
+                        HStack { Text("حجم الخط").font(.ox(15)); Spacer(); Text(Fmt.n(Double(Int(prefs.d.textScale * 100))) + "%").font(.num(13)) }
                         Slider(value: $prefs.d.textScale, in: 0.85...1.3, step: 0.05)
                     }
                     Picker("التباعد", selection: $prefs.d.density) { Text("مريح").tag("comfortable"); Text("مضغوط").tag("compact") }

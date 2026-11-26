@@ -70,9 +70,6 @@ struct MainTabs: View {
                 }
                 .badge(t.id == "more" ? session.unread : 0)
             }
-            Tab(value: "search", role: .search) {
-                NavigationStack { SpotlightView() }
-            }
         }
         .tabViewStyle(.sidebarAdaptable)
         .modifier(TabMinimize())
@@ -83,10 +80,10 @@ struct MainTabs: View {
     @ViewBuilder func tabContent(_ id: String) -> some View {
         switch id {
         case "home": NavigationStack(path: $router.homePath) { HomeView().withDestinations() }
-        case "site": NavigationStack(path: $router.sitePath) { SiteView().withDestinations() }
-        case "stats": NavigationStack(path: $router.statsPath) { StatsView().withDestinations() }
-        case "telegram": NavigationStack(path: $router.tgPath) { TelegramView().withDestinations() }
-        default: NavigationStack(path: $router.morePath) { MoreView().withDestinations() }
+        case "site": NavigationStack(path: $router.sitePath) { SiteView().searchButton().withDestinations() }
+        case "stats": NavigationStack(path: $router.statsPath) { StatsView().searchButton().withDestinations() }
+        case "telegram": NavigationStack(path: $router.tgPath) { TelegramView().searchButton().withDestinations() }
+        default: NavigationStack(path: $router.morePath) { MoreView().searchButton().withDestinations() }
         }
     }
 }
@@ -210,3 +207,16 @@ struct ConfirmSheet: View {
         .onDisappear { guardian.finishConfirm(nil) }
     }
 }
+
+/// زر البحث الشامل بأعلى الصفحات الرئيسية
+struct SearchButton: ViewModifier {
+    func body(content: Content) -> some View {
+        content.toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink(value: "search") { Image(systemName: "magnifyingglass") }
+                    .accessibilityLabel("البحث").accessibilityIdentifier("searchBtn")
+            }
+        }
+    }
+}
+extension View { func searchButton() -> some View { modifier(SearchButton()) } }

@@ -54,6 +54,7 @@ struct Screen: View {
         case "system": SystemView()
         case "account": AccountView()
         case "about": AboutView()
+        case "search": SpotlightView()
         case "telegram": TelegramView()
         case "update": AppUpdatesView()
         default: EmptyState(icon: "questionmark.circle", text: "الصفحة غير موجودة")

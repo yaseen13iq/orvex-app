@@ -27,6 +27,10 @@ struct HomeView: View {
         .oxScreen("أهلًا \(session.name.split(separator: " ").first.map(String.init) ?? "")", page: "home")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink(value: "search") { Image(systemName: "magnifyingglass") }
+                    .accessibilityLabel("البحث").accessibilityIdentifier("searchBtn")
+            }
+            ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink(value: "inbox") {
                     Image(systemName: session.unread > 0 ? "bell.badge.fill" : "bell")
                         .symbolRenderingMode(.palette).foregroundStyle(t.bad, t.ink)

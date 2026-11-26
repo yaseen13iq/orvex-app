@@ -71,7 +71,6 @@ struct SpotlightView: View {
         .listStyle(.insetGrouped)
         .searchable(text: $q, placement: .navigationBarDrawer(displayMode: .always), prompt: "ابحث عن أي شي…")
         .oxScreen("البحث", page: "search")
-        .withDestinations()
         .onChange(of: q) { _, v in
             task?.cancel()
             guard v.count >= 2 else { results = []; return }

@@ -17,11 +17,13 @@ struct OrvexWordmark: View {
     var color: Color? = nil
     @ObservedObject var prefs = Prefs.shared
     var body: some View {
-        WordmarkShape().fill(color ?? prefs.theme.ink).frame(width: height * 5.5, height: height).accessibilityLabel("ORVEX")
+        WordmarkShape().fill(color ?? prefs.theme.ink, style: FillStyle(eoFill: true)).frame(width: height * 5.5, height: height).accessibilityLabel("ORVEX")
     }
 }
 /// حروف ORVEX الرسمية (مرسومة من ملف الهوية)
 struct WordmarkShape: Shape {
+    /// الحروف اللاتينية ما تنعكس بالواجهة العربية
+    var layoutDirectionBehavior: LayoutDirectionBehavior { .fixed }
     func path(in r: CGRect) -> Path {
         let sx = r.width / 550, sy = r.height / 100
         var p = Path()
@@ -59,6 +61,7 @@ struct ScreenBG: ViewModifier {
 extension View {
     func oxScreen(_ title: String, page: String? = nil) -> some View {
         modifier(ScreenBG()).navigationTitle(title).navigationBarTitleDisplayMode(.large)
+            .toggleStyle(SwitchToggleStyle(tint: Prefs.shared.theme.ok))
             .onAppear { if let p = page { Session.shared.page = p } }
     }
 }

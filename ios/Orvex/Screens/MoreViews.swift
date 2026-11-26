@@ -338,7 +338,7 @@ struct AboutView: View {
                 }
                 VStack(spacing: 6) {
                     Text("تصميم وتطوير ياسين محمد").font(.ox(15, .semibold)).foregroundStyle(t.ink)
-                    Text("ORVEX © \(Calendar.current.component(.year, from: Date()))").font(.num(12, .regular)).foregroundStyle(t.mute)
+                    Text("ORVEX © " + String(Calendar.current.component(.year, from: Date()))).font(.num(12, .regular)).foregroundStyle(t.mute)
                 }
             }.padding(16)
         }
