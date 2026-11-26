@@ -38,7 +38,8 @@ jobs:
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             build 2>&1 | tee ../ios-build.log | grep -E "error:|warning: .*Orvex|BUILD (SUCCEEDED|FAILED)" || true
           APP="dd/Build/Products/Release-iphoneos/Orvex.app"
-          test -d "$APP"
+          grep -q "BUILD SUCCEEDED" ../ios-build.log
+          test -f "$APP/Orvex"
           ls "$APP/PlugIns" || echo "no plugins!"
           mkdir -p Payload && cp -R "$APP" Payload/
           zip -qry "../ORVEX-$VER-$CODE.ipa" Payload

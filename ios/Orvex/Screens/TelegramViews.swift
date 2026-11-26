@@ -53,7 +53,7 @@ struct TelegramView: View {
         }.buttonStyle(.plain).accessibilityIdentifier("tg-\(id)")
     }
 
-    struct DP: Identifiable { var id: String { day + k }; let day: Date; let k: String; let v: Double }
+    struct DP: Identifiable { var id: String { "\(day.timeIntervalSince1970)-\(k)" }; let day: Date; let k: String; let v: Double }
     var joinsChart: some View {
         let f = DateFormatter(); f.dateFormat = "yyyy-MM-dd"
         var pts: [DP] = []

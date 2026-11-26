@@ -337,7 +337,7 @@ struct SettingsView: View {
             } header: { Text("أيقونة التطبيق") }
 
             Section {
-                Picker("قفل التطبيق بـ\(guardian.biometryName)", selection: Binding(get: { prefs.d.lock }, set: { v in Task { if v == "off" || (await guardian.authenticate("فعّل قفل التطبيق")) { prefs.d.lock = v } } })) {
+                Picker("قفل التطبيق بـ\(guardian.biometryName)", selection: Binding(get: { prefs.d.lock }, set: { v in Task { if v == "off" { prefs.d.lock = v } else if await guardian.authenticate("فعّل قفل التطبيق") { prefs.d.lock = v } } })) {
                     Text("مطفي").tag("off"); Text("كل ما أطلع").tag("instant"); Text("بعد دقيقة").tag("1m"); Text("بعد 5 دقائق").tag("5m")
                 }.font(.ox(15))
                 Toggle("بطاقة التحديث الجديد عند الفتح", isOn: $prefs.d.showUpdateCard).font(.ox(15))
