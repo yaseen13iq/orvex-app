@@ -1,3 +1,5 @@
-Test Case '-[OrvexUITests.SmokeTests testLaunch]' started.
-Test Case '-[OrvexUITests.SmokeTests testLaunch]' passed (21.924 seconds).
-** TEST SUCCEEDED **
+/Users/runner/work/orvex-app/orvex-app/ios/Orvex/Screens/AppViews.swift:340:163: error: 'async' call in an autoclosure that does not support concurrency
+Testing failed:
+	Testing cancelled because the build failed.
+** TEST FAILED **
+The following build commands failed:
