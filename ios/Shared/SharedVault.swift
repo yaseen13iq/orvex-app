@@ -44,6 +44,11 @@ public enum Vault {
             add[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
             if SecItemAdd(add as CFDictionary, nil) == errSecSuccess { ok = true; if shared && g != nil { break } }
         }
+        // احتياط: إذا الـKeychain مو متاح (بعض الشهادات/المحاكي) نحفظ محليًا حتى ما يطلع المستخدم كل مرة
+        let d = UserDefaults.standard
+        if value == nil { d.removeObject(forKey: "vault." + key) }
+        else if !ok { d.set(value, forKey: "vault." + key); ok = true }
+        else { d.removeObject(forKey: "vault." + key) }
         return ok
     }
     public static func get(_ key: String, shared: Bool = false) -> String? {
@@ -55,7 +60,7 @@ public enum Vault {
             var res: AnyObject?
             if SecItemCopyMatching(q as CFDictionary, &res) == errSecSuccess, let d = res as? Data, let s = String(data: d, encoding: .utf8) { return s }
         }
-        return nil
+        return UserDefaults.standard.string(forKey: "vault." + key)
     }
     /// هل الويدجت يكدر يقرأ؟ (للعرض بإعدادات التطبيق)
     public static var sharingWorks: Bool {

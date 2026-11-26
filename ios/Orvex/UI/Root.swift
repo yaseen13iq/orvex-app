@@ -159,7 +159,7 @@ struct UpdateSheet: View {
                     Pill(text: "تحديث جديد", tone: "ok", icon: "sparkles")
                     Text("أورفيكس \(update["version"].str)").font(.ox(28, .bold)).foregroundStyle(t.ink)
                     Text("بناء \(Fmt.n(update["build"])) · \(Fmt.bytes(update["size"].double ?? 0)) · \(Fmt.ago(update["at"].date))").font(.ox(13)).foregroundStyle(t.mute)
-                    Text("نسختك الحالية \(Bundle.main.version) (\(Bundle.main.build))").font(.ox(12)).foregroundStyle(t.mute)
+                    Text("نسختك الحالية \(Bundle.main.version) · بناء \(Fmt.n(Bundle.main.build))").font(.ox(12)).foregroundStyle(t.mute)
                 }
                 if !update["notes"].arr.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {

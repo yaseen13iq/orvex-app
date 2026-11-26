@@ -27,6 +27,8 @@ for (const [name, type, data] of [['logo.png', 'image/png', png], ['menu-ramadan
   console.log('update', u.status);
 }
 console.log('seeded');
+// يبقي المتصفحين التجريبيين «أونلاين»
+setInterval(() => { try { env.DB._db.prepare('UPDATE presence SET at = ?').run(Date.now() - 5000); } catch (e) {} }, 15000);
 
 http.createServer(async (q, s) => {
   const chunks = []; for await (const c of q) chunks.push(c);

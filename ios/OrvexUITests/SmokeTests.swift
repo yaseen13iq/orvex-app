@@ -17,6 +17,23 @@ final class SmokeTests: XCTestCase {
         let s = XCTAttachment(screenshot: a.screenshot()); s.name = name; s.lifetime = .keepAlways; add(s)
     }
     func log(_ m: String) { print("OrvexReport: " + m) }
+    /// يسجّل دخول إذا طلعت شاشة الدخول، ويسد بطاقة التحديث إذا طلعت
+    @discardableResult
+    func ready(_ a: XCUIApplication) -> Bool {
+        let user = a.textFields["username"], tabs = a.tabBars.firstMatch
+        for _ in 0..<50 {
+            if tabs.exists { return true }
+            if user.exists {
+                user.tap(); user.typeText("joe")
+                let pass = a.secureTextFields["password"]; pass.tap(); pass.typeText("StrongPass1")
+                a.buttons["loginBtn"].tap()
+                log("relogin")
+            }
+            if a.buttons["بعدين"].exists { a.buttons["بعدين"].tap() }
+            usleep(500_000)
+        }
+        return tabs.exists
+    }
 
     func test1_LoginAndUpdate() throws {
         let a = app(noUpdate: false)
@@ -43,7 +60,7 @@ final class SmokeTests: XCTestCase {
 
     func test2_Tabs() throws {
         let a = app(); a.launch()
-        XCTAssertTrue(a.tabBars.firstMatch.waitForExistence(timeout: 25))
+        XCTAssertTrue(ready(a))
         for (i, name) in ["الموقع", "الزوار", "التيليجرام", "المزيد"].enumerated() {
             let b = a.tabBars.buttons[name]
             if b.waitForExistence(timeout: 5) { b.tap(); sleep(2); shot(a, "1\(i)-tab-\(name)") } else { log("FAIL tab \(name)") }
@@ -59,7 +76,7 @@ final class SmokeTests: XCTestCase {
         let routes = ["gate", "mode", "plans", "content", "texts", "mood", "look", "geo", "advanced", "live", "speed", "waitlist", "cast", "botmsgs", "inbox", "notify-send", "files", "users", "monitor", "history", "log", "app-updates", "app-control", "widgets", "settings", "system", "account", "about"]
         for (i, r) in routes.enumerated() {
             let a = app(route: r); a.launch()
-            guard a.tabBars.firstMatch.waitForExistence(timeout: 25) else { log("FAIL no tabs for \(r)"); continue }
+            guard ready(a) else { log("FAIL no tabs for \(r)"); continue }
             sleep(3)
             if a.staticTexts["الصفحة غير موجودة"].exists || a.staticTexts["ما انفتحت الصفحة"].exists { log("FAIL screen \(r) error") } else { log("ok \(r)") }
             shot(a, String(format: "2%02d-%@", i, r))
@@ -71,7 +88,7 @@ final class SmokeTests: XCTestCase {
 
     func test4_EditAndSave() throws {
         let a = app(route: "gate"); a.launch()
-        XCTAssertTrue(a.tabBars.firstMatch.waitForExistence(timeout: 25))
+        XCTAssertTrue(ready(a))
         sleep(2)
         let soon = a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "تشويق")).firstMatch
         if soon.waitForExistence(timeout: 5) { soon.tap() } else { log("FAIL gate option") }
@@ -86,7 +103,7 @@ final class SmokeTests: XCTestCase {
 
     func test5_DarkLight() throws {
         let a = app(route: "settings"); a.launch()
-        XCTAssertTrue(a.tabBars.firstMatch.waitForExistence(timeout: 25))
+        XCTAssertTrue(ready(a))
         sleep(2)
         for th in ["mist", "paper", "iraqfit", "obsidian"] {
             let b = a.buttons["theme-\(th)"]
@@ -98,7 +115,7 @@ final class SmokeTests: XCTestCase {
 
     func test6_iPadLike() throws {
         let a = app(route: "stats"); a.launch()
-        XCTAssertTrue(a.tabBars.firstMatch.waitForExistence(timeout: 25))
+        XCTAssertTrue(ready(a))
         XCUIDevice.shared.orientation = .landscapeLeft
         sleep(2); shot(a, "50-landscape-stats")
         XCUIDevice.shared.orientation = .portrait
