@@ -3,7 +3,7 @@ name: Build ORVEX iOS
 on:
   push:
     branches: [main]
-    paths: ['ios/**', '.github/workflows/ios.yml', 'version.properties', 'tools/**']
+    paths: ['ios/**', 'ci/**', '.github/workflows/ios.yml', 'version.properties', 'tools/**']
   workflow_dispatch: {}
 
 permissions:
@@ -16,7 +16,7 @@ concurrency:
 jobs:
   build:
     runs-on: macos-26
-    timeout-minutes: 60
+    timeout-minutes: 100
     steps:
       - uses: actions/checkout@v4
       - name: Tools
@@ -42,6 +42,15 @@ jobs:
           ls "$APP/PlugIns" || echo "no plugins!"
           mkdir -p Payload && cp -R "$APP" Payload/
           zip -qry "../ORVEX-$VER-$CODE.ipa" Payload
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Start local test server
+        run: |
+          cd ci
+          nohup node serve.mjs 8787 > /tmp/server.log 2>&1 &
+          for i in $(seq 1 40); do curl -s -o /dev/null 127.0.0.1:8787/admin/api/boot && break; sleep 1; done
+          head -8 /tmp/server.log
       - name: UI tests on simulator
         if: success()
         shell: bash
@@ -69,7 +78,8 @@ jobs:
           mkdir -p /tmp/out/ios-tests
           grep -E "error:|BUILD (SUCCEEDED|FAILED)" ios-build.log | head -200 > /tmp/out/ios-build.log || true
           tail -40 ios-build.log >> /tmp/out/ios-build.log || true
-          grep -E "error:|Test Case|TEST (SUCCEEDED|FAILED)|OrvexReport" /tmp/xctest.log > /tmp/out/ios-tests/log.txt 2>/dev/null || true
+          grep -E "error:|Test Case|TEST (SUCCEEDED|FAILED)|OrvexReport|XCTAssert|failed" /tmp/xctest.log > /tmp/out/ios-tests/log.txt 2>/dev/null || true
+          grep -E " (4|5)[0-9][0-9]$|ERR" /tmp/server.log | head -100 > /tmp/out/ios-tests/server.txt 2>/dev/null || true
           if [ -d /tmp/r.xcresult ]; then xcrun xcresulttool export attachments --path /tmp/r.xcresult --output-path /tmp/out/ios-tests/shots >/dev/null 2>&1 || true; fi
           rm -f /tmp/out/*.ipa
           if ls ORVEX-*.ipa >/dev/null 2>&1; then cp ORVEX-*.ipa /tmp/out/; echo "ok $VER $CODE ${GITHUB_SHA}" > /tmp/out/STATUS; else echo "failed $VER $CODE ${GITHUB_SHA}" > /tmp/out/STATUS; fi

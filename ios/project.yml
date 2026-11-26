@@ -2,7 +2,7 @@ name: Orvex
 options:
   bundleIdPrefix: com.orvex
   deploymentTarget:
-    iOS: "17.0"
+    iOS: "18.0"
   developmentLanguage: ar
 settings:
   base:
@@ -37,6 +37,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         OrvexAPI: $(ORVEX_API)
         LSRequiresIPhoneOS: true
+        UIAppFonts: [ReadexPro-Regular.ttf, ReadexPro-Medium.ttf, ReadexPro-SemiBold.ttf, ReadexPro-Bold.ttf, Sora-Regular.ttf, Sora-Medium.ttf, Sora-SemiBold.ttf, Sora-Bold.ttf]
         UILaunchScreen:
           UIColorName: LaunchBG
         NSFaceIDUsageDescription: لقفل التطبيق وتأكيد الإجراءات الحساسة بالفيس آيدي
@@ -46,6 +47,8 @@ targets:
         UIBackgroundModes: [fetch, processing]
         BGTaskSchedulerPermittedIdentifiers: [com.orvex.admin.refresh]
         ITSAppUsesNonExemptEncryption: false
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
