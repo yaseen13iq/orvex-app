@@ -1,0 +1,27 @@
+Application, 0x10625d060, pid: 61930, label: 'أورفيكس' <App element pid: 61930>
+  Window (Main), 0x10625d8a0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 61930, elementOrHash.elementID: 4401035664.4>
+    Other, 0x1062664c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 61930, elementOrHash.elementID: 4377354496.5>
+      Other, 0x10625d480, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 61930, elementOrHash.elementID: 4377355520.6>
+        Other, 0x106266370, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 61930, elementOrHash.elementID: 4401031424.7>
+          Other, 0x10625d9c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 61930, elementOrHash.elementID: 4401315264.8>
+            ScrollView, 0x10625d5a0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 61930, elementOrHash.elementID: 4413246464.9>
+              Other, 0x106249630, {{0.0, 62.0}, {402.0, 612.7}} <AX element pid: 61930, elementOrHash.elementID: 4402117520.10>
+                Image, 0x106249750, {{159.0, 122.0}, {84.0, 84.0}}, label: 'أورفيكس' <AX element pid: 61930, elementOrHash.elementID: 4400914256.12>
+                Other, 0x106252500, {{146.0, 221.6}, {110.0, 21.0}}, label: 'ORVEX' <AX element pid: 61930, elementOrHash.elementID: 4400914688.13>
+                StaticText, 0x106252620, {{124.8, 258.0}, {152.3, 19.0}}, label: 'لوحة تحكم iraqfit.com' <AX element pid: 61930, elementOrHash.elementID: 4401289920.14>
+                Image, 0x106246b70, {{327.3, 345.0}, {13.3, 14.3}}, identifier: 'person.fill', label: 'person.fill' <AX element pid: 61930, elementOrHash.elementID: 4401290704.15>
+                TextField, 0x106246c90, {{58.0, 341.0}, {254.0, 22.0}}, identifier: 'username', placeholderValue: 'اسم المستخدم' <AX element pid: 61930, elementOrHash.elementID: 4413137408.16>
+                Image, 0x10625c140, {{328.7, 412.3}, {10.7, 15.3}}, identifier: 'lock.fill', label: 'قفل' <AX element pid: 61930, elementOrHash.elementID: 4401301856.17>
+                SecureTextField, 0x10625c260, {{95.0, 410.0}, {217.0, 20.0}}, identifier: 'password', placeholderValue: 'كلمة السر' <AX element pid: 61930, elementOrHash.elementID: 4379194880.18>
+                Button, 0x10625c380, {{58.0, 412.3}, {25.0, 15.7}}, identifier: 'eye', label: 'إظهار' <AX element pid: 61930, elementOrHash.elementID: 4401125712.19>
+                Button, 0x10625c4a0, {{42.0, 461.0}, {318.0, 46.0}}, identifier: 'loginBtn', label: 'دخول', Disabled <AX element pid: 61930, elementOrHash.elementID: 4401307056.20>
+                Button, 0x10624ed60, {{147.0, 555.0}, {108.0, 16.3}}, label: 'إعدادات الخادم' <AX element pid: 61930, elementOrHash.elementID: 4401310336.21>
+                  Image, 0x10624ee80, {{238.3, 557.3}, {15.0, 12.0}}, identifier: 'server.rack', label: 'server.rack' <AX element pid: 61930, elementOrHash.elementID: 4401308096.26>
+                  StaticText, 0x10624efa0, {{147.0, 555.0}, {108.0, 16.3}}, label: 'إعدادات الخادم' <AX element pid: 61930, elementOrHash.elementID: 4401309904.27>
+                StaticText, 0x10624f0c0, {{120.2, 609.3}, {161.7, 16.3}}, label: 'تصميم وتطوير ياسين محمد' <AX element pid: 61930, elementOrHash.elementID: 4401311632.22>
+                Image, 0x10624f1e0, {{286.0, 631.7}, {13.0, 13.0}}, label: 'أورفيكس' <AX element pid: 61930, elementOrHash.elementID: 4401312064.23>
+                StaticText, 0x10624f300, {{103.2, 631.8}, {176.7, 12.7}}, label: 'ORVEX · POWERING POSSIBILITIES' <AX element pid: 61930, elementOrHash.elementID: 4401313168.24>
+              Other, 0x10624f420, {{-24.0, 62.0}, {30.0, 750.0}}, label: 'شريط تمرير رأسي, صفحة واحدة', value: ‏0‎%‎ <AX element pid: 61930, elementOrHash.elementID: 4402187856.11>
+                Other, 0x10624f540, {{3.0, 230.3}, {3.0, 578.7}} <AX element pid: 61930, elementOrHash.elementID: 4402197984.25>
+              Other, 0x10624f660, {{-24.0, 62.0}, {30.0, 750.0}}, label: 'شريط تمرير رأسي, صفحة واحدة', value: ‏0‎%‎ <AX element pid: 61930, elementOrHash.elementID: 4402187856.11>
+                Other, 0x10624f780, {{3.0, 230.3}, {3.0, 578.7}} <AX element pid: 61930, elementOrHash.elementID: 4402197984.25>
