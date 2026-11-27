@@ -1,8 +1,10 @@
 Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' started.
 OrvexReport: ok update card
-Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (52.858 seconds).
+OrvexReport: FAIL update card shown again
+<unknown>:0: error: -[OrvexUITests.SmokeTests test1_LoginAndUpdate] : Failed to not hittable: Button, {{16.0, 543.7}, {370.0, 52.0}}, identifier: 'checkUpdate', label: 'التحقق من التحديثات'
+Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' failed (107.899 seconds).
 Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' started.
-Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (59.112 seconds).
+Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (63.437 seconds).
 Test Case '-[OrvexUITests.SmokeTests test3_Screens]' started.
 OrvexReport: ok gate
 OrvexReport: ok schedule
@@ -43,12 +45,15 @@ OrvexReport: ok inbox
 OrvexReport: ok notify-send
 OrvexReport: ok settings
 OrvexReport: ok about
-Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (582.453 seconds).
+Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (538.546 seconds).
 Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' started.
 OrvexReport: ok saved
-Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (32.792 seconds).
+Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (34.588 seconds).
 Test Case '-[OrvexUITests.SmokeTests test5_Dark]' started.
-Test Case '-[OrvexUITests.SmokeTests test5_Dark]' passed (29.622 seconds).
+Test Case '-[OrvexUITests.SmokeTests test5_Dark]' passed (29.352 seconds).
 Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' started.
-Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' passed (22.204 seconds).
-** TEST SUCCEEDED **
+Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' passed (22.300 seconds).
+Test Suite 'SmokeTests' failed at 2026-11-27 11:33:28.803.
+Test Suite 'OrvexUITests.xctest' failed at 2026-11-27 11:33:28.807.
+Test Suite 'All tests' failed at 2026-11-27 11:33:28.808.
+** TEST FAILED **

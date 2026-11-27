@@ -1,0 +1,139 @@
+Application, 0x10596a3a0, pid: 10588, label: 'أورفيكس' <App element pid: 10588>
+  Window (Main), 0x1059724e0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4320793200.3>
+    Other, 0x105973380, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4317062752.4>
+      Other, 0x1059734a0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4317075216.6>
+        Other, 0x105971ca0, {{-402.0, -874.0}, {1206.0, 2622.0}} <AX element pid: 10588, elementOrHash.elementID: 4318763728.32>
+        Other, 0x105972900, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4320654864.10>
+          Other, 0x1059735c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4594311184.12>
+            Other, 0x1059736e0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4320282064.14>
+              Other, 0x105973800, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4318203744.16>
+                Other, 0x105973920, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4320297184.19>
+                  Other, 0x105973a40, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4320873072.26>
+                    Other, 0x105973b60, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4321000480.46>
+                      Other, 0x105973c80, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4594297008.54>
+                        Other, 0x105973da0, {{0.0, 0.0}, {402.0, 874.0}}, value: 3 <AX element pid: 10588, elementOrHash.elementID: 4317516656.59>
+                          NavigationBar, 0x105973ec0, {{0.0, 62.0}, {402.0, 111.3}}, identifier: 'الإعدادات' <AX element pid: 10588, elementOrHash.elementID: 4320897440.66>
+                            Button, 0x105973fe0, {{342.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'الإدارة' <AX element pid: 10588, elementOrHash.elementID: 105553140786880.76>
+                            StaticText, 0x105974100, {{257.7, 120.0}, {128.3, 45.3}}, label: 'الإعدادات' <AX element pid: 10588, elementOrHash.elementID: 4321045488.77>
+                          Other, 0x10596cf50, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4317518384.67>
+                            Other, 0x10596d070, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4317636736.78>
+                              Other, 0x10596d190, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4593974080.82>
+                                Other, 0x10596d2b0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4318755136.85>
+                                  ScrollView, 0x10596d3d0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4355234304.87>
+                                    Other, 0x10596d4f0, {{0.0, -0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4594328528.88>
+                                      Other, 0x10596d610, {{0.0, 0.0}, {402.0, 170.8}} <AX element pid: 10588, elementOrHash.elementID: 4318024368.92>
+                                      Other, 0x10596d730, {{0.0, 726.2}, {402.0, 147.8}} <AX element pid: 10588, elementOrHash.elementID: 4317273616.93>
+                                    Other, 0x10596d850, {{0.0, -0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4594328112.89>
+                                      Other, 0x10596d970, {{0.0, 726.2}, {402.0, 147.8}} <AX element pid: 10588, elementOrHash.elementID: 4317463504.94>
+                                        Other, 0x10596da90, {{0.0, 726.2}, {402.0, 147.8}} <AX element pid: 10588, elementOrHash.elementID: 4317336720.130>
+                                          Other, 0x10596dbb0, {{0.0, 726.2}, {402.0, 147.8}} <AX element pid: 10588, elementOrHash.elementID: 4317738832.147>
+                                        Other, 0x10596dcd0, {{0.0, 726.2}, {402.0, 147.8}} <AX element pid: 10588, elementOrHash.elementID: 4317965536.131>
+                                          Other, 0x10596ddf0, {{0.0, 726.2}, {402.0, 147.8}} <AX element pid: 10588, elementOrHash.elementID: 4317966176.148>
+                                          Other, 0x10596df10, {{0.0, 726.2}, {402.0, 147.8}} <AX element pid: 10588, elementOrHash.elementID: 4594507008.149>
+                                        Image, 0x10596e030, {{-120.0, 731.0}, {642.0, 286.0}}, identifier: 'AdditionalDimmingOverlay' <AX element pid: 10588, elementOrHash.elementID: 4317970832.132>
+                                    Other, 0x10596e150, {{0.0, 173.3}, {402.0, 1629.0}} <AX element pid: 10588, elementOrHash.elementID: 4594327648.90>
+                                      StaticText, 0x10596e270, {{143.3, 173.3}, {238.7, 17.7}}, label: 'حسابك ومظهر التطبيق على هذا الجهاز.' <AX element pid: 10588, elementOrHash.elementID: 4594326288.95>
+                                      StaticText, 0x10596e390, {{333.0, 219.0}, {47.0, 16.3}}, label: 'الحساب' <AX element pid: 10588, elementOrHash.elementID: 4593906464.96>
+                                      StaticText, 0x10596e4b0, {{337.0, 258.8}, {35.0, 19.0}}, label: 'الاسم' <AX element pid: 10588, elementOrHash.elementID: 4593950720.97>
+                                      StaticText, 0x10596e5d0, {{30.0, 258.8}, {27.3, 19.0}}, label: 'Joe' <AX element pid: 10588, elementOrHash.elementID: 4593951504.98>
+                                      StaticText, 0x10596e6f0, {{274.0, 309.8}, {98.0, 19.0}}, label: 'اسم المستخدم' <AX element pid: 10588, elementOrHash.elementID: 4593952288.99>
+                                      StaticText, 0x10596e810, {{30.0, 309.8}, {37.0, 19.0}}, label: '@joe' <AX element pid: 10588, elementOrHash.elementID: 4593937856.100>
+                                      StaticText, 0x10596e930, {{340.0, 360.8}, {32.0, 19.0}}, label: 'الدور' <AX element pid: 10588, elementOrHash.elementID: 4594472656.101>
+                                      StaticText, 0x10596ea50, {{30.0, 360.8}, {118.7, 19.0}}, label: 'المسؤول الرئيسي' <AX element pid: 10588, elementOrHash.elementID: 4594473088.102>
+                                      StaticText, 0x10596eb70, {{281.7, 417.3}, {98.3, 16.3}}, label: 'تحديثات التطبيق' <AX element pid: 10588, elementOrHash.elementID: 4593998448.103>
+                                      StaticText, 0x10596ec90, {{273.0, 457.2}, {99.0, 19.0}}, label: 'نسختك الحالية' <AX element pid: 10588, elementOrHash.elementID: 4593998880.104>
+                                      StaticText, 0x10596edb0, {{30.0, 457.2}, {79.3, 19.0}}, label: '2.0.1 · بناء 3' <AX element pid: 10588, elementOrHash.elementID: 4594546768.105>
+                                      StaticText, 0x10596eed0, {{274.7, 508.2}, {97.3, 19.0}}, label: 'التحديث المتاح' <AX element pid: 10588, elementOrHash.elementID: 4593828368.106>
+                                      StaticText, 0x10596eff0, {{30.0, 508.2}, {79.3, 19.0}}, label: '2.1.0 · بناء 9' <AX element pid: 10588, elementOrHash.elementID: 4593829152.107>
+                                      Button, 0x10596f110, {{16.0, 543.7}, {370.0, 52.0}}, identifier: 'checkUpdate', label: 'التحقق من التحديثات' <AX element pid: 10588, elementOrHash.elementID: 4593832800.108>
+                                        Image, 0x10596f230, {{348.7, 561.0}, {21.0, 17.3}}, identifier: 'arrow.triangle.2.circlepath', label: 'تجري المزامنة' <AX element pid: 10588, elementOrHash.elementID: 4593832368.133>
+                                        StaticText, 0x10596f350, {{184.0, 559.7}, {150.0, 20.0}}, label: 'التحقق من التحديثات' <AX element pid: 10588, elementOrHash.elementID: 4593833968.134>
+                                      StaticText, 0x10596f470, {{338.3, 617.7}, {41.7, 16.3}}, label: 'المظهر' <AX element pid: 10588, elementOrHash.elementID: 4593836704.109>
+                                      SegmentedControl, 0x10596f590, {{32.0, 658.0}, {338.0, 31.0}}, identifier: 'appearance' <AX element pid: 10588, elementOrHash.elementID: 4317505936.110>
+                                        Button, 0x10596f6b0, {{32.0, 658.0}, {112.0, 32.0}}, label: 'داكن' <AX element pid: 10588, elementOrHash.elementID: 4594132416.135>
+                                        Button, 0x10596f7d0, {{144.0, 658.0}, {113.0, 32.0}}, label: 'فاتح' <AX element pid: 10588, elementOrHash.elementID: 4594128176.136>
+                                        Button, 0x10596f8f0, {{257.0, 658.0}, {113.0, 32.0}}, label: 'تلقائي', Selected <AX element pid: 10588, elementOrHash.elementID: 4318730720.137>
+                                      Switch, 0x10596fa10, {{30.0, 724.0}, {342.0, 38.3}}, label: 'الأرقام الإنجليزية (123)‏، عند الإيقاف تظهر الأرقام العربية (١٢٣)', value: 1 <AX element pid: 10588, elementOrHash.elementID: 4317974880.111>
+                                        StaticText, 0x10596fb30, {{217.3, 724.0}, {154.7, 20.0}}, label: 'الأرقام الإنجليزية (123)' <AX element pid: 10588, elementOrHash.elementID: 4593854240.138>
+                                        StaticText, 0x10596fc50, {{165.3, 746.0}, {206.7, 16.3}}, label: 'عند الإيقاف تظهر الأرقام العربية (١٢٣)' <AX element pid: 10588, elementOrHash.elementID: 4593854672.139>
+                                        Switch, 0x10596fd70, {{30.0, 729.0}, {63.0, 28.0}}, value: 1 <AX element pid: 10588, elementOrHash.elementID: 4755344080.140>
+                                      Switch, 0x10596fe90, {{30.0, 785.3}, {342.0, 28.0}}, label: 'الاهتزاز عند اللمس', value: 1 <AX element pid: 10588, elementOrHash.elementID: 4317347536.112>
+                                        StaticText, 0x10596ffb0, {{243.7, 789.3}, {128.3, 20.0}}, label: 'الاهتزاز عند اللمس' <AX element pid: 10588, elementOrHash.elementID: 4317594224.141>
+                                        Switch, 0x1059700d0, {{30.0, 785.3}, {63.0, 28.0}}, value: 1 <AX element pid: 10588, elementOrHash.elementID: 4594232544.142>
+                                      StaticText, 0x1059701f0, {{294.7, 848.3}, {85.3, 16.3}}, label: 'أيقونة التطبيق' <AX element pid: 10588, elementOrHash.elementID: 4317224192.113>
+                                      StaticText, 0x105970310, {{279.0, 1188.7}, {101.0, 16.3}}, label: 'تغيير كلمة المرور' <AX element pid: 10588, elementOrHash.elementID: 4318667392.114>
+                                      StaticText, 0x105970430, {{264.3, 1227.0}, {107.7, 16.3}}, label: 'كلمة المرور الحالية' <AX element pid: 10588, elementOrHash.elementID: 4318697360.115>
+                                      TextField, 0x105970550, {{42.0, 1261.3}, {318.0, 22.0}} <AX element pid: 10588, elementOrHash.elementID: 4338471936.116>
+                                      StaticText, 0x105970670, {{143.0, 1323.3}, {229.0, 16.3}}, label: 'كلمة المرور الجديدة (8 أحرف على الأقل)' <AX element pid: 10588, elementOrHash.elementID: 4755367520.117>
+                                      TextField, 0x105970790, {{42.0, 1357.7}, {318.0, 22.0}} <AX element pid: 10588, elementOrHash.elementID: 4339069440.118>
+                                      Button, 0x1059708b0, {{16.0, 1405.7}, {370.0, 52.0}}, identifier: 'action-تغيير كلمة المرور', label: 'تغيير كلمة المرور' <AX element pid: 10588, elementOrHash.elementID: 4318686896.119>
+                                        Image, 0x1059709d0, {{353.7, 1421.3}, {11.0, 21.0}}, identifier: 'key.fill', label: 'كلمات السر' <AX element pid: 10588, elementOrHash.elementID: 4318770880.143>
+                                        StaticText, 0x105970af0, {{212.0, 1421.7}, {122.0, 20.0}}, label: 'تغيير كلمة المرور' <AX element pid: 10588, elementOrHash.elementID: 4318683776.144>
+                                      StaticText, 0x105970c10, {{121.0, 1465.7}, {259.0, 16.3}}, label: 'عند تغييرها يُسجَّل الخروج من أجهزتك الأخرى.' <AX element pid: 10588, elementOrHash.elementID: 4318785584.120>
+                                      StaticText, 0x105970d30, {{335.7, 1504.0}, {44.3, 16.3}}, label: 'أجهزتك' <AX element pid: 10588, elementOrHash.elementID: 4318848752.121>
+                                      StaticText, 0x1059692c0, {{22.0, 1504.7}, {6.7, 15.0}}, label: '2' <AX element pid: 10588, elementOrHash.elementID: 4318843488.122>
+                                      StaticText, 0x1059693e0, {{209.3, 1543.8}, {162.7, 19.0}}, label: 'التطبيق (هذا الجهاز) · 🇮🇶' <AX element pid: 10588, elementOrHash.elementID: 4318807152.123>
+                                      StaticText, 0x105969500, {{30.0, 1543.8}, {69.0, 19.0}}, label: 'قبل دقيقة' <AX element pid: 10588, elementOrHash.elementID: 4318807936.124>
+                                      StaticText, 0x105969620, {{281.7, 1594.8}, {90.3, 19.0}}, label: 'المتصفح · 🇮🇶' <AX element pid: 10588, elementOrHash.elementID: 4318263168.125>
+                                      StaticText, 0x105969740, {{30.0, 1594.8}, {81.0, 19.0}}, label: 'قبل 7 دقائق' <AX element pid: 10588, elementOrHash.elementID: 4318845920.126>
+                                      Button, 0x105969860, {{16.0, 1630.3}, {370.0, 52.0}}, identifier: 'action-تسجيل الخروج من الأجهزة الأخرى', label: 'تسجيل الخروج من الأجهزة الأخرى' <AX element pid: 10588, elementOrHash.elementID: 4318847136.127>
+                                        Image, 0x105969980, {{350.0, 1647.3}, {18.0, 18.3}}, identifier: 'iphone.slash', label: 'iphone.slash' <AX element pid: 10588, elementOrHash.elementID: 4318846704.145>
+                                        StaticText, 0x105969aa0, {{98.3, 1646.3}, {235.7, 20.0}}, label: 'تسجيل الخروج من الأجهزة الأخرى' <AX element pid: 10588, elementOrHash.elementID: 4318775104.146>
+                                      Other, 0x105969bc0, {{0.0, 0.0}, {0.0, 0.0}} <AX element pid: 10588, elementOrHash.elementID: 4318688224.128>
+                                    Other, 0x1059743a0, {{-24.0, 116.0}, {30.0, 675.0}}, label: 'شريط تمرير رأسي, ‏3 صفحات', value: ‏0‎%‎ <AX element pid: 10588, elementOrHash.elementID: 4317659344.91>
+                                      Other, 0x1059744c0, {{3.0, 119.0}, {3.0, 328.0}} <AX element pid: 10588, elementOrHash.elementID: 4317660320.129>
+                                    Other, 0x1059745e0, {{-24.0, 116.0}, {30.0, 675.0}}, label: 'شريط تمرير رأسي, ‏3 صفحات', value: ‏0‎%‎ <AX element pid: 10588, elementOrHash.elementID: 4317659344.91>
+                                      Other, 0x105974700, {{3.0, 119.0}, {3.0, 328.0}} <AX element pid: 10588, elementOrHash.elementID: 4317660320.129>
+                          Other, 0x105974820, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4317524928.68>
+                            Other, 0x105974940, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4317528224.79>
+              Other, 0x105974a60, {{0.0, 791.0}, {402.0, 83.0}} <AX element pid: 10588, elementOrHash.elementID: 4320519936.17>
+                Other, 0x105974b80, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4318267280.20>
+                  TabBar, 0x105974ca0, {{0.0, 791.0}, {402.0, 83.0}}, label: 'شريط علامات التبويب' <AX element pid: 10588, elementOrHash.elementID: 4320858864.27>
+                    Other, 0x105974dc0, {{21.0, 791.0}, {360.0, 62.0}} <AX element pid: 10588, elementOrHash.elementID: 4320254064.47>
+                      Other, 0x105974ee0, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320868960.55>
+                        Other, 0x1059751e0, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320327632.60>
+                          Other, 0x105975300, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320334048.69>
+                          Other, 0x105975420, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320395216.70>
+                            Other, 0x105975540, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320298944.80>
+                              Other, 0x105975660, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320304352.83>
+                                Other, 0x105975780, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320307472.86>
+                              Other, 0x1059758a0, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320861264.84>
+                            Other, 0x1059759c0, {{25.0, 795.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4320443760.81>
+                      Other, 0x105975ae0, {{21.0, 791.0}, {95.0, 54.0}} <AX element pid: 10588, elementOrHash.elementID: 4317237680.56>
+                      Other, 0x105975c00, {{21.0, 791.0}, {360.0, 62.0}} <AX element pid: 10588, elementOrHash.elementID: 4320305232.57>
+                        Button, 0x105975d20, {{282.0, 795.0}, {95.0, 54.0}}, identifier: 'house', label: 'الرئيسية' <AX element pid: 10588, elementOrHash.elementID: 4354230272.61>
+                          Image, 0x105975e40, {{313.0, 801.0}, {33.3, 28.0}}, identifier: 'house.fill', label: 'منزل' <AX element pid: 10588, elementOrHash.elementID: 4320880960.71>
+                        Button, 0x105975f60, {{196.3, 795.0}, {95.0, 54.0}}, identifier: 'globe', label: 'الموقع' <AX element pid: 10588, elementOrHash.elementID: 4354254336.62>
+                          Image, 0x105976080, {{230.3, 801.3}, {27.3, 27.0}}, identifier: 'globe.fill', label: 'globe.fill' <AX element pid: 10588, elementOrHash.elementID: 4320905024.72>
+                        Button, 0x1059761a0, {{110.7, 795.0}, {95.0, 54.0}}, identifier: 'chart.bar', label: 'الإحصاءات' <AX element pid: 10588, elementOrHash.elementID: 4337315840.63>
+                          Image, 0x1059762c0, {{140.7, 802.3}, {35.0, 25.3}}, identifier: 'chart.bar.fill', label: 'مخطط عمودي' <AX element pid: 10588, elementOrHash.elementID: 4317152144.73>
+                        Button, 0x1059763e0, {{25.0, 795.0}, {95.0, 54.0}}, identifier: 'person.crop.circle', label: 'الإدارة', Selected <AX element pid: 10588, elementOrHash.elementID: 4337584640.64>
+                          Image, 0x105976500, {{59.0, 801.3}, {27.3, 27.3}}, identifier: 'person.crop.circle.fill', label: 'حساب' <AX element pid: 10588, elementOrHash.elementID: 4317180432.74>
+                Other, 0x105976620, {{0.0, 791.0}, {402.0, 83.0}} <AX element pid: 10588, elementOrHash.elementID: 4320425440.21>
+                  Other, 0x105976740, {{0.0, 791.0}, {402.0, 83.0}} <AX element pid: 10588, elementOrHash.elementID: 4317957744.41>
+                    Other, 0x105976860, {{0.0, 791.0}, {402.0, 83.0}} <AX element pid: 10588, elementOrHash.elementID: 4317280624.48>
+                      Other, 0x105976980, {{0.0, 791.0}, {402.0, 83.0}} <AX element pid: 10588, elementOrHash.elementID: 4317848400.58>
+                        Other, 0x105976aa0, {{0.0, 791.0}, {402.0, 83.0}} <AX element pid: 10588, elementOrHash.elementID: 4317898624.65>
+                          Other, 0x105976bc0, {{0.0, 791.0}, {402.0, 83.0}} <AX element pid: 10588, elementOrHash.elementID: 4317951840.75>
+    Other, 0x105976ce0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 10588, elementOrHash.elementID: 4318756128.29>
+      Other, 0x105976e00, {{-402.0, -874.0}, {1206.0, 2622.0}} <AX element pid: 10588, elementOrHash.elementID: 4318759328.30>
+      Other, 0x105976f20, {{0.0, 62.0}, {402.0, 812.0}} <AX element pid: 10588, elementOrHash.elementID: 4318767120.31>
+        Other, 0x105977040, {{0.0, 62.0}, {402.0, 812.0}} <AX element pid: 10588, elementOrHash.elementID: 4318687408.33>
+          Other, 0x105977160, {{0.0, 62.0}, {402.0, 812.0}} <AX element pid: 10588, elementOrHash.elementID: 4318344336.34>
+            Other, 0x105977280, {{0.0, 62.0}, {402.0, 812.0}} <AX element pid: 10588, elementOrHash.elementID: 4318829872.35>
+              Other, 0x1059773a0, {{0.0, 62.0}, {402.0, 812.0}} <AX element pid: 10588, elementOrHash.elementID: 4594350624.36>
+                ScrollView, 0x1059774c0, {{55.7, 77.0}, {291.0, 613.0}} <AX element pid: 10588, elementOrHash.elementID: 4339637760.37>
+                  Other, 0x1059775e0, {{55.7, 77.0}, {291.0, 142.3}} <AX element pid: 10588, elementOrHash.elementID: 4317463040.42>
+                    Image, 0x105977700, {{274.7, 113.0}, {36.0, 36.0}}, label: 'أورفيكس' <AX element pid: 10588, elementOrHash.elementID: 4320926576.49>
+                    StaticText, 0x105977820, {{77.7, 107.0}, {169.0, 26.3}}, label: 'تحديث جديد متاح' <AX element pid: 10588, elementOrHash.elementID: 4321165728.50>
+                    StaticText, 0x105977940, {{153.0, 137.3}, {93.7, 17.7}}, label: 'الإصدار ⁨⁩ · بناء ⁨—⁩' <AX element pid: 10588, elementOrHash.elementID: 4321153728.51>
+                    StaticText, 0x105977a60, {{168.7, 181.0}, {156.0, 16.3}}, label: 'نسختك الحالية ⁨2.0.1⁩ · بناء ⁨3⁩' <AX element pid: 10588, elementOrHash.elementID: 4321172928.52>
+                  Other, 0x105977b80, {{31.7, 77.0}, {30.0, 613.0}}, label: 'شريط تمرير رأسي, صفحة واحدة', value: ‏0‎%‎ <AX element pid: 10588, elementOrHash.elementID: 4317618576.43>
+                    Other, 0x105977ca0, {{58.7, 680.0}, {3.0, 7.0}} <AX element pid: 10588, elementOrHash.elementID: 4317936784.53>
+                  Other, 0x105977dc0, {{31.7, 77.0}, {30.0, 613.0}}, label: 'شريط تمرير رأسي, صفحة واحدة', value: ‏0‎%‎ <AX element pid: 10588, elementOrHash.elementID: 4317618576.43>
+                    Other, 0x105977ee0, {{58.7, 680.0}, {3.0, 7.0}} <AX element pid: 10588, elementOrHash.elementID: 4317936784.53>
+                Button, 0x105978000, {{16.0, 690.0}, {370.0, 52.0}}, identifier: 'downloadUpdate', label: 'تنزيل التحديث' <AX element pid: 10588, elementOrHash.elementID: 4594344800.38>
+                  Image, 0x105978120, {{248.0, 708.0}, {16.3, 16.3}}, identifier: 'arrow.down.circle.fill', label: 'سهم لأسفل في دائرة' <AX element pid: 10588, elementOrHash.elementID: 4321180128.44>
+                  StaticText, 0x105978240, {{136.5, 706.0}, {102.0, 20.0}}, label: 'تنزيل التحديث' <AX element pid: 10588, elementOrHash.elementID: 4321162528.45>
+                Button, 0x105978360, {{185.0, 762.7}, {32.0, 19.0}}, identifier: 'laterBtn', label: 'لاحقًا' <AX element pid: 10588, elementOrHash.elementID: 4594430992.39>
+                StaticText, 0x105978480, {{26.3, 802.0}, {349.3, 30.0}}, label: 'عند اختيار «لاحقًا» لن تظهر هذه البطاقة مجددًا، ويمكنك التحقق من التحديثات يدويًا من الإعدادات.' <AX element pid: 10588, elementOrHash.elementID: 4593963296.40>
