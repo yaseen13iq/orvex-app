@@ -25,7 +25,7 @@ struct RootView: View {
         } message: { Text(session.alert?["body"].str ?? "") }
     }
 }
-struct UpdateItem: Identifiable { let id = UUID(); let u: JSON }
+struct UpdateItem: Identifiable { let u: JSON; var id: String { "\(u["version"].str)-\(u["build"].int ?? 0)" } }
 
 // MARK: - التبويبات الأربعة
 struct MainTabs: View {

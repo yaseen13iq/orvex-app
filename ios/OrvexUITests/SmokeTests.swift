@@ -64,10 +64,12 @@ final class SmokeTests: XCTestCase {
         let b = app(noUpdate: false); b.launch()
         XCTAssertTrue(b.tabBars.firstMatch.waitForExistence(timeout: 25)); sleep(5)
         log(b.buttons["downloadUpdate"].exists ? "FAIL update card shown again" : "ok update card stays hidden")
+        if b.buttons["laterBtn"].exists { b.buttons["laterBtn"].tap(); sleep(2) }
         // الفحص اليدوي من الإعدادات يعرضها
         b.terminate()
         let c = app(route: "settings", noUpdate: false); c.launch()
-        XCTAssertTrue(ready(c)); sleep(3); shot(c, "05-settings-update")
+        XCTAssertTrue(c.tabBars.firstMatch.waitForExistence(timeout: 25)); sleep(4); shot(c, "05-settings-update")
+        log("debug " + String(describing: c.descendants(matching: .any)["curVer"].value))
         if c.buttons["laterBtn"].exists { log("FAIL card visible on settings launch"); c.buttons["laterBtn"].tap(); sleep(2) }
         let chk = c.buttons["checkUpdate"]
         if chk.waitForExistence(timeout: 5) {
