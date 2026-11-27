@@ -17,6 +17,16 @@ final class Session: ObservableObject {
     private var pingTask: Task<Void, Never>?
     private var lastAlertId: Int = UserDefaults.standard.integer(forKey: "orvex.lastAlert")
 
+    static let skippedKey = "orvex.skippedUpdateBuild"
+    /// التحديث المتاح (إن وُجد) بصرف النظر عن «لاحقًا»
+    var availableUpdate: JSON? { let u = app["update"]; return (u["build"].int ?? 0) > Bundle.main.build ? u : nil }
+    func skipUpdate(_ u: JSON) { UserDefaults.standard.set(u["build"].int ?? 0, forKey: Session.skippedKey); pendingUpdate = nil }
+    /// فحص يدوي للتحديثات من الإعدادات
+    func checkForUpdate() async -> JSON? {
+        if let r = try? await API.shared.get("/app/boot") { app = r["app"] }
+        return availableUpdate
+    }
+
     var isOwner: Bool { me["role"].string == "owner" }
     var name: String { me["name"].string ?? me["username"].string ?? "" }
     var firstName: String { name.split(separator: " ").first.map(String.init) ?? name }
@@ -54,8 +64,10 @@ final class Session: ObservableObject {
             if !app["enabled"].isTrue && !isOwner {
                 phase = .killed(app["message"].text.isEmpty ? "أوقف المسؤول التطبيق مؤقتًا." : app["message"].text); return
             }
-            let up = app["update"]
-            pendingUpdate = (up["build"].int ?? 0) > Bundle.main.build ? up : nil
+            let up = app["update"], b = up["build"].int ?? 0
+            // لا تظهر البطاقة تلقائيًا مرة أخرى بعد «لاحقًا» إلا إذا كان التحديث إلزاميًا أو صدر بناء أحدث
+            let skipped = UserDefaults.standard.integer(forKey: Session.skippedKey)
+            pendingUpdate = b > Bundle.main.build && (up["mandatory"].isTrue || b > skipped) ? up : nil
             if ProcessInfo.processInfo.environment["ORVEX_NO_UPDATE"] == "1" { pendingUpdate = nil }
             phase = .ready
             if let r = ProcessInfo.processInfo.environment["ORVEX_ROUTE"], !r.isEmpty { Router.shared.open(r) }

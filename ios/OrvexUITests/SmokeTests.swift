@@ -59,6 +59,21 @@ final class SmokeTests: XCTestCase {
         XCTAssertTrue(ready(a))
         sleep(3); dismissAlert(a); shot(a, "03-home")
         a.swipeUp(); sleep(1); shot(a, "04-home-b")
+        // بعد «لاحقًا» لا تظهر البطاقة عند الفتح التالي
+        a.terminate()
+        let b = app(noUpdate: false); b.launch()
+        XCTAssertTrue(b.tabBars.firstMatch.waitForExistence(timeout: 25)); sleep(5)
+        log(b.buttons["downloadUpdate"].exists ? "FAIL update card shown again" : "ok update card stays hidden")
+        // الفحص اليدوي من الإعدادات يعرضها
+        b.terminate()
+        let c = app(route: "settings", noUpdate: false); c.launch()
+        XCTAssertTrue(ready(c)); sleep(3); shot(c, "05-settings-update")
+        let chk = c.buttons["checkUpdate"]
+        if chk.waitForExistence(timeout: 5) {
+            chk.tap()
+            log(c.buttons["downloadUpdate"].waitForExistence(timeout: 10) ? "ok manual update check" : "FAIL manual check")
+            shot(c, "06-manual-update")
+        } else { log("FAIL check button") }
     }
 
     func test2_Tabs() throws {

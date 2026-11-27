@@ -16,7 +16,7 @@ struct RootView: View {
         }
         .animation(.easeInOut(duration: 0.25), value: session.phase)
         .sheet(isPresented: $confirmer.asking, onDismiss: { if confirmer.asking == false { confirmer.finish(nil) } }) { ConfirmSheet() }
-        .sheet(item: Binding(get: { session.pendingUpdate.map { UpdateItem(u: $0) } }, set: { if $0 == nil { session.pendingUpdate = nil } })) { it in
+        .sheet(item: Binding(get: { session.pendingUpdate.map { UpdateItem(u: $0) } }, set: { if $0 == nil, let u = session.pendingUpdate { if u["mandatory"].isTrue { session.pendingUpdate = nil } else { session.skipUpdate(u) } } })) { it in
             UpdateSheet(update: it.u).interactiveDismissDisabled(it.u["mandatory"].isTrue)
         }
         .alert(session.alert?["title"].str ?? "", isPresented: Binding(get: { session.alert != nil && session.pendingUpdate == nil && !confirmer.asking && session.phase == .ready }, set: { if !$0 { session.alert = nil } })) {
@@ -223,9 +223,9 @@ struct UpdateSheet: View {
                 }
                 .accessibilityIdentifier("downloadUpdate")
                 if !update["mandatory"].isTrue {
-                    Button("لاحقًا") { dismiss() }.font(.ox(15)).foregroundStyle(C.mute).frame(height: 40).accessibilityIdentifier("laterBtn")
+                    Button("لاحقًا") { Session.shared.skipUpdate(update); dismiss() }.font(.ox(15)).foregroundStyle(C.mute).frame(height: 40).accessibilityIdentifier("laterBtn")
                 }
-                Text("يُنزَّل الملف عبر Safari، ثم ثبّته بتطبيق التوقيع كالمعتاد.").font(.ox(12)).foregroundStyle(C.mute).padding(.bottom, 8)
+                Text(update["mandatory"].isTrue ? "يُنزَّل الملف عبر Safari، ثم ثبّته بتطبيق التوقيع كالمعتاد." : "عند اختيار «لاحقًا» لن تظهر هذه البطاقة مجددًا، ويمكنك التحقق من التحديثات يدويًا من الإعدادات.").font(.ox(12)).foregroundStyle(C.mute).multilineTextAlignment(.center).padding(.horizontal, 20).padding(.bottom, 8)
             }
         }
         .background(C.bg.ignoresSafeArea())

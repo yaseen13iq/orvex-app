@@ -23,7 +23,7 @@ for (const [name, type, data] of [['logo.png', 'image/png', png], ['menu-ramadan
   const ipa = Buffer.alloc(20000, 7);
   const ini = await joe.call('/admin/api/files/init', { body: { name: 'ORVEX-2.1.0-3.ipa', size: ipa.length, type: 'application/octet-stream' } });
   await joe.call(`/admin/api/files/${ini.data.id}/body`, { method: 'PUT', raw: ipa });
-  const u = await joe.call('/admin/api/app/update', { body: { fileId: ini.data.id, version: '2.1.0', build: 3, notes: 'تحسينات في سرعة التطبيق\nإضافة تقارير أسبوعية للزوار\nإصلاح أخطاء بسيطة' } });
+  const u = await joe.call('/admin/api/app/update', { body: { fileId: ini.data.id, version: '2.1.0', build: 9, notes: 'تحسينات في سرعة التطبيق\nإضافة تقارير أسبوعية للزوار\nإصلاح أخطاء بسيطة' } });
   console.log('update', u.status);
 }
 console.log('seeded');

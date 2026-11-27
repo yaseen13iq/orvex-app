@@ -305,6 +305,18 @@ struct SettingsView: View {
                 InfoRow(title: "اسم المستخدم", value: "@" + session.me["username"].str)
                 InfoRow(title: "الدور", value: session.isOwner ? "المسؤول الرئيسي" : "مشرف")
             }
+            SectionTitle("تحديثات التطبيق")
+            Card {
+                InfoRow(title: "نسختك الحالية", value: "\(Bundle.main.version) · بناء \(Fmt.n(Bundle.main.build))")
+                if let u = session.availableUpdate {
+                    InfoRow(title: "التحديث المتاح", value: "\(u["version"].str) · بناء \(Fmt.n(u["build"]))")
+                }
+                ActionRow(title: "التحقق من التحديثات", icon: "arrow.triangle.2.circlepath") {
+                    if let u = await session.checkForUpdate() { session.pendingUpdate = u }
+                    else { Toasts.shared.show("أنت تستخدم أحدث نسخة من التطبيق.") }
+                }
+                .accessibilityIdentifier("checkUpdate")
+            }
             SectionTitle("المظهر")
             if prefs.locked {
                 Note(text: "حدّد المسؤول الرئيسي مظهر التطبيق، ولا يمكن تغييره من هنا.", tone: "info", icon: "lock.fill")

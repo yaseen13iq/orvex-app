@@ -18,17 +18,6 @@ struct HomeView: View {
                     }
                 }
             }
-            if session.canAny(["stats", "live", "waitlist.view"]) {
-                SectionTitle("أرقام اليوم")
-                KPIGrid {
-                    if !s["today"].isNull {
-                        Button { Router.shared.open("stats") } label: { KPI(title: "الزيارات", value: Fmt.n(s["today"]["views"]), foot: Fmt.n(s["today"]["uniq"]) + " زائر مختلف") }.buttonStyle(.plain)
-                        KPI(title: "المتصفحون الآن", value: Fmt.n(s["live"]), foot: "خلال آخر 5 دقائق")
-                    }
-                    if !s["waitlist"].isNull { KPI(title: "المنتظرون", value: Fmt.n(s["waitlist"]), foot: "بانتظار فتح الاشتراكات") }
-                    if !s["today"].isNull { KPI(title: "نقرات «اشترك»", value: Fmt.n(s["today"]["cta"]), foot: Fmt.n(s["today"]["rem"]) + " نقرة على «ذكّرني»") }
-                }
-            }
             if session.can("history.view") {
                 SectionTitle("آخر التعديلات")
                 Card {
