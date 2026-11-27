@@ -28,9 +28,14 @@ final class SmokeTests: XCTestCase {
                 a.buttons["loginBtn"].tap(); log("login")
             }
             if a.buttons["laterBtn"].exists { a.buttons["laterBtn"].tap() }
+            dismissAlert(a)
             usleep(500_000)
         }
         return tabs.exists
+    }
+    func dismissAlert(_ a: XCUIApplication) {
+        let al = a.alerts.firstMatch
+        if al.exists { if al.buttons["حسنًا"].exists { al.buttons["حسنًا"].tap() } else { al.buttons.firstMatch.tap() } }
     }
     func bad(_ a: XCUIApplication) -> Bool {
         a.staticTexts["الصفحة غير موجودة"].exists || a.staticTexts["تعذّر تحميل هذه الصفحة"].exists || a.staticTexts["غير متاح"].exists
@@ -45,12 +50,14 @@ final class SmokeTests: XCTestCase {
             let pass = a.secureTextFields["password"]; pass.tap(); pass.typeText("StrongPass1")
             a.buttons["loginBtn"].tap()
         }
+        sleep(4)
+        if a.alerts.firstMatch.exists { shot(a, "02a-alert"); dismissAlert(a) }
         if a.buttons["downloadUpdate"].waitForExistence(timeout: 20) {
             sleep(1); shot(a, "02-update"); log("ok update card")
             if a.buttons["laterBtn"].exists { a.buttons["laterBtn"].tap() }
         } else { log("FAIL no update card") }
-        XCTAssertTrue(a.tabBars.firstMatch.waitForExistence(timeout: 20))
-        sleep(3); shot(a, "03-home")
+        XCTAssertTrue(ready(a))
+        sleep(3); dismissAlert(a); shot(a, "03-home")
         a.swipeUp(); sleep(1); shot(a, "04-home-b")
     }
 
@@ -79,7 +86,7 @@ final class SmokeTests: XCTestCase {
         for (i, r) in routes.enumerated() {
             let a = app(route: r); a.launch()
             guard ready(a) else { log("FAIL no tabs for \(r)"); continue }
-            sleep(3)
+            sleep(3); dismissAlert(a)
             log(bad(a) ? "FAIL screen \(r)" : "ok \(r)")
             let n = String(format: "2%02d-%@", i, r.replacingOccurrences(of: ":", with: "-"))
             shot(a, n)

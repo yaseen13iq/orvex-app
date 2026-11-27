@@ -19,7 +19,7 @@ struct RootView: View {
         .sheet(item: Binding(get: { session.pendingUpdate.map { UpdateItem(u: $0) } }, set: { if $0 == nil { session.pendingUpdate = nil } })) { it in
             UpdateSheet(update: it.u).interactiveDismissDisabled(it.u["mandatory"].isTrue)
         }
-        .alert(session.alert?["title"].str ?? "", isPresented: Binding(get: { session.alert != nil }, set: { if !$0 { session.alert = nil } })) {
+        .alert(session.alert?["title"].str ?? "", isPresented: Binding(get: { session.alert != nil && session.pendingUpdate == nil && !confirmer.asking && session.phase == .ready }, set: { if !$0 { session.alert = nil } })) {
             Button("عرض الإشعارات") { session.alert = nil; Router.shared.open("inbox") }
             Button("حسنًا", role: .cancel) { session.alert = nil }
         } message: { Text(session.alert?["body"].str ?? "") }
