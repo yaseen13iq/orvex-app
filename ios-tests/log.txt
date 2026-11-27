@@ -2,12 +2,12 @@ Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' started.
 OrvexReport: ok update card
 OrvexReport: ok later closed
 OrvexReport: FAIL update card shown again
-OrvexReport: debug Optional(skipped 0)
+OrvexReport: debug Optional(skipped 0 calls 2 last | boot b=9 skipped=0 boots=3 ud 0 kc 0)
 OrvexReport: FAIL card visible on settings launch
 OrvexReport: ok manual update check
-Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (122.806 seconds).
+Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (121.408 seconds).
 Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' started.
-Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (69.351 seconds).
+Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (79.770 seconds).
 Test Case '-[OrvexUITests.SmokeTests test3_Screens]' started.
 OrvexReport: ok gate
 OrvexReport: ok schedule
@@ -48,12 +48,12 @@ OrvexReport: ok inbox
 OrvexReport: ok notify-send
 OrvexReport: ok settings
 OrvexReport: ok about
-Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (582.036 seconds).
+Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (522.492 seconds).
 Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' started.
 OrvexReport: ok saved
-Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (33.426 seconds).
+Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (31.884 seconds).
 Test Case '-[OrvexUITests.SmokeTests test5_Dark]' started.
-Test Case '-[OrvexUITests.SmokeTests test5_Dark]' passed (29.385 seconds).
+Test Case '-[OrvexUITests.SmokeTests test5_Dark]' passed (27.632 seconds).
 Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' started.
-Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' passed (21.451 seconds).
+Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' passed (22.892 seconds).
 ** TEST SUCCEEDED **
