@@ -20,7 +20,16 @@ final class Session: ObservableObject {
     static let skippedKey = "orvex.skippedUpdateBuild"
     /// التحديث المتاح (إن وُجد) بصرف النظر عن «لاحقًا»
     var availableUpdate: JSON? { let u = app["update"]; return (u["build"].int ?? 0) > Bundle.main.build ? u : nil }
-    func skipUpdate(_ u: JSON) { UserDefaults.standard.set(u["build"].int ?? 0, forKey: Session.skippedKey); UserDefaults.standard.synchronize(); pendingUpdate = nil }
+    /// آخر بناء اختار المستخدم تأجيله («لاحقًا»)
+    static var skippedBuild: Int {
+        max(UserDefaults.standard.integer(forKey: skippedKey), Int(Vault.get("skippedUpdateBuild") ?? "") ?? 0)
+    }
+    func skipUpdate(_ u: JSON) {
+        let b = u["build"].int ?? Int(u["build"].str) ?? 0
+        UserDefaults.standard.set(b, forKey: Session.skippedKey)
+        Vault.set("skippedUpdateBuild", String(b))
+        pendingUpdate = nil
+    }
     /// فحص يدوي للتحديثات من الإعدادات
     func checkForUpdate() async -> JSON? {
         if let r = try? await API.shared.get("/app/boot") { app = r["app"] }
@@ -66,7 +75,7 @@ final class Session: ObservableObject {
             }
             let up = app["update"], b = up["build"].int ?? 0
             // لا تظهر البطاقة تلقائيًا مرة أخرى بعد «لاحقًا» إلا إذا كان التحديث إلزاميًا أو صدر بناء أحدث
-            let skipped = UserDefaults.standard.integer(forKey: Session.skippedKey)
+            let skipped = Session.skippedBuild
             pendingUpdate = b > Bundle.main.build && (up["mandatory"].isTrue || b > skipped) ? up : nil
             if ProcessInfo.processInfo.environment["ORVEX_NO_UPDATE"] == "1" { pendingUpdate = nil }
             phase = .ready

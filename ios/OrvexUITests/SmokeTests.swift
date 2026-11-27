@@ -54,7 +54,7 @@ final class SmokeTests: XCTestCase {
         if a.alerts.firstMatch.exists { shot(a, "02a-alert"); dismissAlert(a) }
         if a.buttons["downloadUpdate"].waitForExistence(timeout: 20) {
             sleep(1); shot(a, "02-update"); log("ok update card")
-            if a.buttons["laterBtn"].exists { a.buttons["laterBtn"].tap() }
+            if a.buttons["laterBtn"].exists { a.buttons["laterBtn"].tap(); sleep(2); log(a.buttons["downloadUpdate"].exists ? "FAIL later did not close" : "ok later closed") } else { log("FAIL no later button") }
         } else { log("FAIL no update card") }
         XCTAssertTrue(ready(a))
         sleep(3); dismissAlert(a); shot(a, "03-home")
