@@ -252,7 +252,7 @@ struct SystemView: View {
                     }
                     if session.status["cron"].isNull {
                         Spacer().frame(height: 10)
-                        Note(text: "لتفعيل المهمة المجدولة: من Cloudflare افتح الـWorker ← Settings ← Trigger Events ← Add ← Cron Triggers، واكتب ‎* * * * *", tone: "warn", icon: "exclamationmark.triangle.fill")
+                        Note(text: "المهمة المجدولة غير مفعّلة، لذلك لن يعمل الفتح التلقائي ولا الإرسال في الخلفية. فعّلها من إعدادات الـWorker في Cloudflare من قسم Trigger Events.", tone: "warn", icon: "exclamationmark.triangle.fill")
                     }
                     SectionTitle("الموقع")
                     Card {

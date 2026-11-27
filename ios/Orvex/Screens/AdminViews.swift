@@ -375,3 +375,14 @@ extension String {
         return out
     }
 }
+
+/// معاينة حيّة لرسالة الفتح أثناء تعديلها
+struct BotOpenPreview: View {
+    var base: [Seg]
+    @ObservedObject var store = ConfigStore.shared
+    var body: some View {
+        let n = store.v(base)
+        let parts = [n["openIntro"].ar, n["openMessage"].ar, n["openCta"].ar.isEmpty ? "" : "<a href=\"https://iraqfit.com\">" + n["openCta"].ar + "</a>", n["openFooter"].ar].filter { !$0.isEmpty }
+        MessageBubble(html: parts.joined(separator: "\n\n"))
+    }
+}

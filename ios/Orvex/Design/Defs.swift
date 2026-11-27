@@ -231,7 +231,7 @@ enum Defs {
                 F("ui.allowOverride", "السماح للزائر بتغيير المظهر", .toggle),
             ]),
         ]))
-        add(FormDef(id: "mood", title: "الترحيب والألوان حسب الوقت", intro: "يتغيّر لون الموقع وعبارة الترحيب حسب وقت الزيارة بتوقيت بغداد.", bilingual: false, sections: [
+        add(FormDef(id: "mood", title: "الترحيب حسب الوقت", intro: "يتغيّر لون الموقع وعبارة الترحيب حسب وقت الزيارة بتوقيت بغداد.", bilingual: false, sections: [
             FormSection(nil, [
                 F("mood.enabled", "تفعيل الميزة", .toggle),
                 F("mood.palette", "تغيير الألوان حسب الوقت", .toggle),
@@ -264,12 +264,17 @@ enum Defs {
             FormSection("إعادة التحميل", [F("reload.enabled", "إظهار زر إعادة التحميل", .toggle), F("reload.label", "نص الزر"), F("reload.auto", "إعادة التحميل تلقائيًا", .toggle), F("reload.everySec", "كل", .number("ثانية"))]),
         ]))
         // —— بوت التذكير
-        add(FormDef(id: "bot", title: "رسائل بوت التذكير", intro: "الرسائل التي يرسلها بوت التيليجرام للمنتظرين. يمكن استخدام <b>عريض</b> و<i>مائل</i>.", sections: [
+        add(FormDef(id: "bot", title: "رسائل بوت التذكير", intro: "الرسائل التي يرسلها بوت التيليجرام للمنتظرين، مع معاينة لرسالة الفتح كما تصل إليهم.", sections: [
             FormSection("رسالة الفتح", footer: "تُرسل لكل المنتظرين عند فتح الاشتراكات.", [F("openIntro", "المقدمة"), F("openMessage", "الرسالة", .long), F("openCta", "نص رابط الاشتراك"), F("openFooter", "التذييل", .long)]),
             FormSection("رسائل التسجيل", [F("welcome", "عند التسجيل", .long), F("already", "إذا كان مسجّلًا من قبل", .long), F("leftNote", "عند إلغاء التسجيل", .long), F("statusIn", "حالته: مسجّل", .long), F("statusOut", "حالته: غير مسجّل", .long), F("stranger", "لمن يراسل البوت دون تسجيل", .long), F("help", "شرح البوت", .long)]),
             FormSection("أزرار البوت", [F("joinLabel", "زر التسجيل"), F("statusLabel", "زر الحالة"), F("leaveLabel", "زر إلغاء التسجيل"), F("helpLabel", "زر الشرح"), F("igLabel", "زر إنستغرام"), F("siteLabel", "زر الموقع")]),
             FormSection("ملف البوت", [F("profile.short", "الوصف القصير"), F("profile.description", "الوصف الكامل", .long)]),
-        ]))
+        ], preview: { base in
+            AnyView(VStack(alignment: .leading, spacing: 0) {
+                SectionTitle("معاينة رسالة الفتح")
+                BotOpenPreview(base: base)
+            })
+        }))
         return d
     }()
 
