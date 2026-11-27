@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// إعدادات الموقع + المسودة + الحفظ والتراجع (نفس منطق لوحة التحكم)
+/// إعدادات الموقع، والتعديلات غير المحفوظة، والحفظ والتراجع
 @MainActor
 final class ConfigStore: ObservableObject {
     static let shared = ConfigStore()
@@ -78,6 +78,9 @@ final class ConfigStore: ObservableObject {
         }
     }
     func discard() { ops = [:]; rebase() }
+    func reset() { ops = [:]; cfg = .null; draft = .null; loadedAt = nil }
+    /// وصف مختصر للتعديلات غير المحفوظة
+    var summary: String { FieldNames.describe(ops.values.map(\.path)) }
 
     // MARK: الحفظ
     @discardableResult
@@ -92,27 +95,26 @@ final class ConfigStore: ObservableObject {
                 if let v = op.value { o["v"] = v } else { o["del"] = true }
                 return o
             }),
-            "what": .string(what ?? Labels.describe(list.map(\.path), store: self)),
+            "what": .string(what ?? FieldNames.describe(list.map(\.path))),
         ]
         do {
             let r = try await API.shared.post("/config/patch", body)
             ops = [:]
             apply(r)
             let ver = r["version"].int
-            Prefs.shared.notify(.success)
-            Toasts.shared.show(r["same"].isTrue ? "ماكو تغيير فعلي" : "انحفظ ✓ " + (r["version_name"].string ?? ""), "ok", action: ver != nil && Session.shared.can("history.undo") ? "تراجع" : nil) {
+            Toasts.shared.show(r["same"].isTrue ? "لم يتغيّر شيء فعليًا." : "حُفظت التعديلات ونُشرت في الموقع.", "ok", action: ver != nil && Session.shared.can("history.undo") ? "تراجع" : nil) {
                 if let v = ver { Task { await self.undo(v) } }
             }
             Task { await Session.shared.refreshStatus() }
             return true
         } catch {
             if let e = error as? APIError, let first = e.data["errors"].arr.first {
-                Toasts.shared.show(e.message + " — " + Labels.pathLabel(pathFromJSON(first["p"]), store: self), "bad")
+                Toasts.shared.show(e.message + " — " + FieldNames.label(pathFromJSON(first["p"])), "bad")
             } else { Toasts.shared.error(error) }
             return false
         }
     }
-    /// حفظ فوري لتعديلات محددة (مثل فتح/سد الاشتراكات من الرئيسية)
+    /// حفظ فوري لتعديلات محددة
     func quick(_ changes: [([Seg], JSON?)], what: String) async {
         for (p, v) in changes { set(p, v) }
         await save(what)
@@ -121,13 +123,13 @@ final class ConfigStore: ObservableObject {
         do {
             let r = try await API.shared.post("/history/undo", ["id": .number(Double(version)), "force": .bool(force)])
             apply(r)
-            Toasts.shared.show(r["same"].isTrue ? "كل شي راجع أصلًا" : "تم التراجع ✓")
+            Toasts.shared.show(r["same"].isTrue ? "القيم الحالية مطابقة للسابق أصلًا." : "تم التراجع عن التعديل.")
         } catch let e as APIError where e.status == 409 {
-            Toasts.shared.show("بعض الإعدادات تغيّرت بعدها — افتح سجل التعديلات للتراجع بالقوة", "warn")
+            Toasts.shared.show("تغيّرت بعض هذه الإعدادات لاحقًا. افتح سجل التعديلات للتراجع منه.", "warn")
         } catch { Toasts.shared.error(error) }
     }
 
-    // MARK: الصلاحيات حسب المسار (نفس السيرفر)
+    // MARK: الصلاحيات حسب المسار (مطابقة للخادم)
     func canPath(_ p: [Seg]) -> Bool {
         let s = Session.shared
         if s.isOwner { return true }

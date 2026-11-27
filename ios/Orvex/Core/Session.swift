@@ -1,6 +1,4 @@
 import SwiftUI
-import LocalAuthentication
-import WidgetKit
 
 // MARK: - الجلسة
 @MainActor
@@ -10,19 +8,20 @@ final class Session: ObservableObject {
 
     @Published var phase: Phase = .loading
     @Published var me: JSON = .null
-    @Published var perms: [JSON] = []
     @Published var app: JSON = .null
     @Published var unread = 0
     @Published var status: JSON = .null
     @Published var page = "home"
     @Published var pendingUpdate: JSON? = nil
     @Published var alert: JSON? = nil
-    @Published var lastSync: Date? = nil
     private var pingTask: Task<Void, Never>?
     private var lastAlertId: Int = UserDefaults.standard.integer(forKey: "orvex.lastAlert")
 
     var isOwner: Bool { me["role"].string == "owner" }
     var name: String { me["name"].string ?? me["username"].string ?? "" }
+    var firstName: String { name.split(separator: " ").first.map(String.init) ?? name }
+
+    /// هل يملك المستخدم هذه الصلاحية؟ (المسؤول الرئيسي يملك كل شيء)
     func can(_ k: String) -> Bool {
         if isOwner { return true }
         let p = me["perms"]
@@ -38,7 +37,7 @@ final class Session: ObservableObject {
             Task { @MainActor in self?.signOutLocal() }
         }
         NotificationCenter.default.addObserver(forName: .orvexKilled, object: nil, queue: .main) { [weak self] n in
-            Task { @MainActor in self?.phase = .killed((n.object as? String) ?? "التطبيق موقوف مؤقتًا") }
+            Task { @MainActor in self?.phase = .killed((n.object as? String) ?? "التطبيق متوقف مؤقتًا.") }
         }
     }
 
@@ -50,30 +49,31 @@ final class Session: ObservableObject {
     func boot() async {
         do {
             let r = try await API.shared.get("/app/boot")
-            me = r["me"]; perms = r["perms"].arr; app = r["app"]; unread = r["unread"].int ?? 0
+            me = r["me"]; app = r["app"]; unread = r["unread"].int ?? 0
             Prefs.shared.applyAdmin(app["display"], canCustomize: can("app.customize"))
-            if !app["enabled"].isTrue && !isOwner { phase = .killed(app["message"].text.isEmpty ? "التطبيق موقوف مؤقتًا" : app["message"].text); return }
+            if !app["enabled"].isTrue && !isOwner {
+                phase = .killed(app["message"].text.isEmpty ? "أوقف المسؤول التطبيق مؤقتًا." : app["message"].text); return
+            }
             let up = app["update"]
-            if (up["build"].int ?? 0) > Bundle.main.build, Prefs.shared.d.showUpdateCard || up["mandatory"].isTrue { pendingUpdate = up } else { pendingUpdate = nil }
+            pendingUpdate = (up["build"].int ?? 0) > Bundle.main.build ? up : nil
+            if ProcessInfo.processInfo.environment["ORVEX_NO_UPDATE"] == "1" { pendingUpdate = nil }
             phase = .ready
             if let r = ProcessInfo.processInfo.environment["ORVEX_ROUTE"], !r.isEmpty { Router.shared.open(r) }
-            if ProcessInfo.processInfo.environment["ORVEX_NO_UPDATE"] == "1" { pendingUpdate = nil }
             startPing()
             await refreshStatus()
+            Task { await ConfigStore.shared.load() }
         } catch let e as APIError {
             if e.status == 401 { signOutLocal() }
             else if e.status == 423 { phase = .killed(e.message) }
-            else if e.status == 0 { phase = .offline(e.message) }
             else { phase = .offline(e.message) }
         } catch { phase = .offline(error.localizedDescription) }
     }
 
     func login(username: String, password: String) async throws {
-        let dev = UIDevice.current
-        let r = try await API.shared.post("/login", ["username": .string(username), "password": .string(password), "client": "app", "device": .string(dev.name)])
-        guard let t = r["token"].string else { throw APIError(status: 0, message: "ما وصل رمز الدخول") }
+        let r = try await API.shared.post("/login", ["username": .string(username), "password": .string(password), "client": "app", "device": .string(UIDevice.current.name)])
+        guard let t = r["token"].string else { throw APIError(status: 0, message: "لم يصل رمز الدخول من الخادم.") }
         API.shared.token = t
-        Vault.set("lastUser", username)
+        UserDefaults.standard.set(username, forKey: "orvex.lastUser")
         await boot()
     }
 
@@ -85,12 +85,11 @@ final class Session: ObservableObject {
         pingTask?.cancel(); pingTask = nil
         API.shared.token = nil
         me = .null; status = .null; unread = 0
-        LiveCenter.shared.endAll()
-        WidgetCenter.shared.reloadAllTimelines()
+        ConfigStore.shared.reset()
         phase = .login
     }
 
-    // MARK: نبض الحضور (المراقبة الصامتة) والإشعارات
+    // MARK: نبض الحضور (لمعرفة من يستخدم التطبيق الآن) والإشعارات
     func startPing() {
         pingTask?.cancel()
         pingTask = Task { [weak self] in
@@ -103,31 +102,22 @@ final class Session: ObservableObject {
     func ping() async {
         guard phase == .ready else { return }
         let d = UIDevice.current
-        var sysInfo = utsname(); uname(&sysInfo)
-        let model = withUnsafePointer(to: &sysInfo.machine) { $0.withMemoryRebound(to: CChar.self, capacity: 1) { String(cString: $0) } }
+        var sys = utsname(); uname(&sys)
+        let model = withUnsafePointer(to: &sys.machine) { $0.withMemoryRebound(to: CChar.self, capacity: 1) { String(cString: $0) } }
         if let r = try? await API.shared.post("/ping", ["page": .string(page), "device": ["model": .string(model), "os": .string(d.systemVersion), "app": .string(Bundle.main.version), "name": .string(d.name)]]) {
-            let old = unread
             unread = r["unread"].int ?? 0
             if let a = r["alert"].object, let id = a["id"]?.int, id != lastAlertId {
                 lastAlertId = id; UserDefaults.standard.set(id, forKey: "orvex.lastAlert")
                 alert = r["alert"]
-                LiveCenter.shared.alert(title: r["alert"]["title"].str, detail: r["alert"]["body"].str, level: r["alert"]["level"].str)
-            } else if unread > old {
-                Prefs.shared.notify(.success)
             }
-            lastSync = Date()
         }
     }
     func refreshStatus() async {
-        if let s = try? await API.shared.get("/status") {
-            status = s
-            LiveCenter.shared.sync(with: s)
-            WidgetCenter.shared.reloadAllTimelines()
-        }
+        if let s = try? await API.shared.get("/status") { status = s; unread = s["unread"].int ?? unread }
     }
 }
 
-// MARK: - التنبيهات المؤقتة
+// MARK: - الرسائل المؤقتة أسفل الشاشة
 @MainActor
 final class Toasts: ObservableObject {
     static let shared = Toasts()
@@ -142,9 +132,9 @@ final class Toasts: ObservableObject {
     @Published var items: [Item] = []
     func show(_ text: String, _ kind: String = "ok", action: String? = nil, _ fn: (() -> Void)? = nil) {
         let it = Item(text: text, kind: kind, actionTitle: action, action: fn)
-        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) { items.append(it); if items.count > 2 { items.removeFirst() } }
-        kind == "bad" ? Prefs.shared.notify(.error) : Prefs.shared.notify(.success)
-        Task { try? await Task.sleep(nanoseconds: UInt64(action == nil ? 3.5e9 : 9e9)); withAnimation { self.items.removeAll { $0.id == it.id } } }
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) { items = [it] }
+        Haptics.notify(kind == "bad" ? .error : .success)
+        Task { try? await Task.sleep(nanoseconds: UInt64(action == nil ? 3.5e9 : 8e9)); withAnimation { self.items.removeAll { $0.id == it.id } } }
     }
     func error(_ e: Error) {
         if e is CancellationError { return }
@@ -153,52 +143,22 @@ final class Toasts: ObservableObject {
     }
 }
 
-// MARK: - الفيس آيدي والقفل والتأكيد
+// MARK: - تأكيد الإجراءات الحسّاسة بكلمة المرور
 @MainActor
-final class Guardian: ObservableObject {
-    static let shared = Guardian()
-    @Published var locked = false
-    @Published var confirmAsk: Bool = false
-    @Published var confirmHasPin = false
-    private var confirmCont: CheckedContinuation<String?, Never>?
-    private var backgroundAt: Date?
+final class Confirmer: ObservableObject {
+    static let shared = Confirmer()
+    @Published var asking = false
+    private var cont: CheckedContinuation<String?, Never>?
+    func ask() async -> String? {
+        await withCheckedContinuation { c in cont = c; asking = true }
+    }
+    func finish(_ code: String?) {
+        asking = false
+        cont?.resume(returning: code); cont = nil
+    }
+}
 
-    var biometryName: String {
-        let c = LAContext(); _ = c.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        switch c.biometryType { case .faceID: return "الفيس آيدي"; case .touchID: return "البصمة"; case .opticID: return "Optic ID"; default: return "رمز الجهاز" }
-    }
-    var biometryIcon: String {
-        let c = LAContext(); _ = c.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-        return c.biometryType == .touchID ? "touchid" : "faceid"
-    }
-    func authenticate(_ reason: String) async -> Bool {
-        let c = LAContext()
-        c.localizedFallbackTitle = "رمز الجهاز"
-        var err: NSError?
-        let policy: LAPolicy = c.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &err) ? .deviceOwnerAuthenticationWithBiometrics : .deviceOwnerAuthentication
-        return (try? await c.evaluatePolicy(policy, localizedReason: reason)) ?? false
-    }
-    // القفل
-    func didBackground() { backgroundAt = Date() }
-    func shouldLock() -> Bool {
-        let l = Prefs.shared.d.lock
-        guard l != "off", Session.shared.phase == .ready else { return false }
-        guard let b = backgroundAt else { return l != "off" }
-        let s = Date().timeIntervalSince(b)
-        return l == "instant" || (l == "1m" && s > 60) || (l == "5m" && s > 300)
-    }
-    func unlock() async { if await authenticate("افتح تطبيق أورفيكس") { locked = false } }
-
-    // التأكيد للإجراءات الحساسة: فيس آيدي ← الرمز المحفوظ، وإلا يطلب الرمز يدويًا
-    func confirm(hasPin: Bool) async -> String? {
-        if let saved = Vault.get("pin"), !saved.isEmpty {
-            if await authenticate("تأكيد إجراء حساس") { return saved }
-        }
-        confirmHasPin = hasPin
-        return await withCheckedContinuation { c in confirmCont = c; confirmAsk = true }
-    }
-    func finishConfirm(_ code: String?) {
-        confirmAsk = false
-        confirmCont?.resume(returning: code); confirmCont = nil
-    }
+enum Haptics {
+    static func tap() { guard Prefs.shared.haptics else { return }; UIImpactFeedbackGenerator(style: .light).impactOccurred() }
+    static func notify(_ t: UINotificationFeedbackGenerator.FeedbackType) { guard Prefs.shared.haptics else { return }; UINotificationFeedbackGenerator().notificationOccurred(t) }
 }

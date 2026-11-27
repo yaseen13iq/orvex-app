@@ -14,14 +14,12 @@ extension Notification.Name {
     static let orvexKilled = Notification.Name("orvex.killed")
 }
 
-/// الاتصال بالسيرفر. كل الطلبات Bearer، فما تحتاج حماية CSRF.
+/// الاتصال بالخادم. جميع الطلبات بترويسة Bearer.
 final class API {
     static let shared = API()
-    var token: String? { didSet { Vault.set(SharedKeys.token, token, shared: true) } }
-    var base: String {
-        didSet { Vault.set(SharedKeys.base, base, shared: true) }
-    }
-    /// يُستدعى لما السيرفر يطلب تأكيد إجراء حساس (يرجع الرمز أو nil إذا ألغى)
+    var token: String? { didSet { Vault.set("token", token) } }
+    var base: String
+    /// يُستدعى عندما يطلب الخادم تأكيد إجراء حسّاس (يعيد كلمة المرور أو nil عند الإلغاء)
     var confirmProvider: ((Bool) async -> String?)?
     let session: URLSession
 
@@ -33,8 +31,7 @@ final class API {
         session = URLSession(configuration: cfg)
         let env = ProcessInfo.processInfo.environment["ORVEX_API"] ?? UserDefaults.standard.string(forKey: "orvex.base")
         base = (env?.isEmpty == false ? env! : (Bundle.main.object(forInfoDictionaryKey: "OrvexAPI") as? String) ?? "https://iraqfit.com").trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
-        token = Vault.get(SharedKeys.token, shared: true)
-        Vault.set(SharedKeys.base, base, shared: true)
+        token = Vault.get("token")
     }
     func setBase(_ s: String) {
         let v = s.trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
@@ -49,7 +46,7 @@ final class API {
     @discardableResult
     func post(_ path: String, _ body: JSON = [:]) async throws -> JSON { try await send("POST", path, body: body) }
 
-    /// يرسل الطلب، وإذا طلب السيرفر تأكيد يسأل المستخدم ويعيد المحاولة
+    /// يرسل الطلب، وإذا طلب الخادم تأكيدًا يسأل المستخدم ثم يعيد المحاولة
     func send(_ method: String, _ path: String, body: JSON?, raw: Data? = nil, retried: Bool = false) async throws -> JSON {
         var r = URLRequest(url: url(path))
         r.httpMethod = method
@@ -59,12 +56,12 @@ final class API {
         let data: Data, resp: URLResponse
         do { (data, resp) = try await session.data(for: r) } catch {
             if (error as NSError).code == NSURLErrorCancelled { throw CancellationError() }
-            throw APIError(status: 0, message: "ما كدرت أوصل للسيرفر. تأكد من الإنترنت.")
+            throw APIError(status: 0, message: "تعذّر الاتصال بالخادم. تحقّق من اتصال الإنترنت ثم أعد المحاولة.")
         }
         let status = (resp as? HTTPURLResponse)?.statusCode ?? 0
         let j = (try? JSONCodec.parse(data)) ?? .null
         if (200..<300).contains(status), j["ok"].bool != false { return j }
-        let msg = j["error"].string ?? "خطأ من السيرفر (\(status))"
+        let msg = j["error"].string ?? "حدث خطأ في الخادم (\(status))."
         if status == 401, j["auth"].isTrue {
             await MainActor.run { NotificationCenter.default.post(name: .orvexUnauthorized, object: nil) }
         }
@@ -78,12 +75,12 @@ final class API {
                 b["confirm"] = .string(code)
                 return try await send(method, path, body: b, raw: raw, retried: status == 403)
             }
-            throw APIError(status: 499, message: "انلغى التأكيد")
+            throw APIError(status: 499, message: "أُلغي التأكيد.")
         }
         throw err
     }
 
-    /// رفع بيانات مع تقدّم
+    /// رفع البيانات مع إظهار نسبة التقدّم
     func upload(_ path: String, data: Data, progress: @escaping (Double) -> Void) async throws -> JSON {
         var r = URLRequest(url: url(path))
         r.httpMethod = "PUT"
@@ -94,7 +91,7 @@ final class API {
         let (d, resp) = try await session.upload(for: r, from: data, delegate: delegate)
         let status = (resp as? HTTPURLResponse)?.statusCode ?? 0
         let j = (try? JSONCodec.parse(d)) ?? .null
-        guard (200..<300).contains(status), j["ok"].bool != false else { throw APIError(status: status, message: j["error"].string ?? "فشل الرفع (\(status))", data: j) }
+        guard (200..<300).contains(status), j["ok"].bool != false else { throw APIError(status: status, message: j["error"].string ?? "تعذّر رفع الملف (\(status)).", data: j) }
         return j
     }
 
@@ -102,7 +99,7 @@ final class API {
         var r = URLRequest(url: url)
         if let t = token { r.setValue("Bearer " + t, forHTTPHeaderField: "Authorization") }
         let (tmp, resp) = try await session.download(for: r)
-        guard (resp as? HTTPURLResponse)?.statusCode == 200 else { throw APIError(status: (resp as? HTTPURLResponse)?.statusCode ?? 0, message: "فشل التحميل") }
+        guard (resp as? HTTPURLResponse)?.statusCode == 200 else { throw APIError(status: (resp as? HTTPURLResponse)?.statusCode ?? 0, message: "تعذّر تنزيل الملف.") }
         let name = (resp as? HTTPURLResponse)?.suggestedFilename ?? url.lastPathComponent
         let dest = FileManager.default.temporaryDirectory.appendingPathComponent(name)
         try? FileManager.default.removeItem(at: dest)

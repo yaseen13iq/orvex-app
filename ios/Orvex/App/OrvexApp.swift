@@ -1,21 +1,14 @@
 import SwiftUI
-import WidgetKit
 
 @main
 struct OrvexApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var session = Session.shared
     @StateObject var prefs = Prefs.shared
-    @StateObject var guardian = Guardian.shared
     @Environment(\.scenePhase) var phase
 
     init() {
-        BackgroundRefresh.register()
-        API.shared.confirmProvider = { hasPin in await Guardian.shared.confirm(hasPin: hasPin) }
-        if ProcessInfo.processInfo.arguments.contains("-uitest-reset") {
-            UserDefaults.standard.removeObject(forKey: "orvex.prefs")
-            API.shared.token = nil
-        }
+        API.shared.confirmProvider = { _ in await Confirmer.shared.ask() }
     }
 
     var body: some Scene {
@@ -26,65 +19,74 @@ struct OrvexApp: App {
                 .environmentObject(session)
                 .environmentObject(prefs)
                 .preferredColorScheme(prefs.colorScheme)
-                .tint(prefs.theme.accent)
+                .tint(C.info)
                 .task { await session.start() }
-                .onOpenURL { url in DeepLink.handle(url) }
+                .onOpenURL { url in if let h = url.host { Router.shared.open(h) } }
         }
         .onChange(of: phase) { _, p in
-            switch p {
-            case .background:
-                guardian.didBackground()
-                BackgroundRefresh.schedule()
-                WidgetCenter.shared.reloadAllTimelines()
-            case .active:
-                if guardian.shouldLock() { guardian.locked = true }
-                if session.phase == .ready { Task { await session.refreshStatus(); await session.ping() } }
-            default: break
-            }
+            if p == .active, session.phase == .ready { Task { await session.refreshStatus(); await ConfigStore.shared.load() } }
         }
     }
 }
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        let f = UIFont(name: "ReadexPro-Bold", size: 34) ?? .boldSystemFont(ofSize: 34)
-        let f2 = UIFont(name: "ReadexPro-SemiBold", size: 17) ?? .boldSystemFont(ofSize: 17)
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font: f]
-        UINavigationBar.appearance().titleTextAttributes = [.font: f2]
+        let big = UIFont(name: "ReadexPro-Bold", size: 32) ?? .boldSystemFont(ofSize: 32)
+        let small = UIFont(name: "ReadexPro-SemiBold", size: 17) ?? .boldSystemFont(ofSize: 17)
+        let nav = UINavigationBar.appearance()
+        nav.largeTitleTextAttributes = [.font: big]
+        nav.titleTextAttributes = [.font: small]
+        let tab = UITabBarItem.appearance()
+        let tf = UIFont(name: "ReadexPro-Medium", size: 10.5) ?? .systemFont(ofSize: 10.5)
+        tab.setTitleTextAttributes([.font: tf], for: .normal)
+        tab.setTitleTextAttributes([.font: tf], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.font: UIFont(name: "ReadexPro-Medium", size: 13) ?? .systemFont(ofSize: 13)], for: .normal)
         return true
     }
 }
 
-/// روابط داخلية orvex://… (من الويدجت والجزيرة)
-enum DeepLink {
-    static func handle(_ url: URL) {
-        guard url.scheme == "orvex" else { return }
-        let host = url.host ?? ""
-        Task { @MainActor in Router.shared.open(host) }
-    }
-}
-
-/// التنقل العام بين التبويبات والصفحات
+/// التنقّل بين التبويبات والصفحات
 @MainActor
 final class Router: ObservableObject {
     static let shared = Router()
-    @Published var tab = Prefs.shared.d.startTab
-    @Published var morePath = NavigationPath()
+    @Published var tab = "home"
+    @Published var homePath = NavigationPath()
     @Published var sitePath = NavigationPath()
     @Published var statsPath = NavigationPath()
-    @Published var tgPath = NavigationPath()
-    @Published var homePath = NavigationPath()
+    @Published var adminPath = NavigationPath()
+
+    static let siteScreens: Set<String> = ["gate", "schedule", "plans", "pricing", "content", "sections", "faq", "pages", "links", "mode", "geo", "look", "mood", "texts", "seo"]
+    static let statsScreens: Set<String> = ["live", "speed"]
+
+    /// يفتح صفحة بالاسم (يستخدم للروابط والاختبارات)
     func open(_ dest: String) {
-        switch dest {
-        case "home", "": tab = "home"
-        case "site", "gate", "mode", "plans", "content", "texts", "mood", "train", "look", "geo", "advanced":
-            tab = "site"; sitePath = NavigationPath(); if dest != "site" { sitePath.append(dest) }
-        case "stats", "live", "speed": tab = "stats"; statsPath = NavigationPath(); if dest != "stats" { statsPath.append(dest) }
-        case "telegram", "waitlist", "cast", "botmsgs": tab = "telegram"; tgPath = NavigationPath(); if dest != "telegram" { tgPath.append(dest) }
-        case "search": tab = "home"; homePath = NavigationPath(); homePath.append("search")
-        case "update": if let u = Session.shared.app["update"].object { Session.shared.pendingUpdate = .object(u) }
-        default: tab = "more"; morePath = NavigationPath(); morePath.append(dest)
+        if dest == "home" { tab = "home"; homePath = NavigationPath(); return }
+        if dest == "site" { tab = "site"; sitePath = NavigationPath(); return }
+        if dest == "stats" { tab = "stats"; statsPath = NavigationPath(); return }
+        if dest == "admin" { tab = "admin"; adminPath = NavigationPath(); return }
+        if dest == "update" { if let u = Session.shared.app["update"].object { Session.shared.pendingUpdate = .object(u) }; return }
+        if dest.hasPrefix("form:"), let id = dest.split(separator: ":").last {
+            tab = "site"; sitePath = NavigationPath(); sitePath.append(AnyHashableRoute.form(String(id), formBase(String(id)))); return
         }
+        if dest.hasPrefix("list:"), let id = dest.split(separator: ":").last {
+            tab = "site"; sitePath = NavigationPath(); sitePath.append(AnyHashableRoute.list(String(id), listBase(String(id)))); return
+        }
+        if Router.siteScreens.contains(dest) { tab = "site"; sitePath = NavigationPath(); sitePath.append(dest); return }
+        if Router.statsScreens.contains(dest) { tab = "stats"; statsPath = NavigationPath(); statsPath.append(dest); return }
+        tab = "admin"; adminPath = NavigationPath(); adminPath.append(dest)
+    }
+    func formBase(_ id: String) -> [Seg] {
+        switch id {
+        case "gate-extra": return P("gate")
+        case "vip", "included", "goals", "steps", "compare", "gym", "train", "changelog", "gallery", "developer", "visitors", "maintenance", "offline": return P(id)
+        case "bot": return P("notify")
+        case "page-about": return P("pages", "about")
+        case "page-terms": return P("pages", "terms")
+        case "page-privacy": return P("pages", "privacy")
+        default: return []
+        }
+    }
+    func listBase(_ id: String) -> [Seg] {
+        switch id { case "plans": return P("plans"); case "counters": return P("counters"); case "faq": return P("faq"); default: return [] }
     }
 }

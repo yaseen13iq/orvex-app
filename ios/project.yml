@@ -22,10 +22,6 @@ targets:
     platform: iOS
     sources:
       - path: Orvex
-      - path: Shared
-    dependencies:
-      - target: OrvexWidgets
-        embed: true
     info:
       path: Orvex/Info.plist
       properties:
@@ -40,12 +36,7 @@ targets:
         UIAppFonts: [ReadexPro-Regular.ttf, ReadexPro-Medium.ttf, ReadexPro-SemiBold.ttf, ReadexPro-Bold.ttf, Sora-Regular.ttf, Sora-Medium.ttf, Sora-SemiBold.ttf, Sora-Bold.ttf]
         UILaunchScreen:
           UIColorName: LaunchBG
-        NSFaceIDUsageDescription: لقفل التطبيق وتأكيد الإجراءات الحساسة بالفيس آيدي
-        NSPhotoLibraryUsageDescription: لاختيار صور ترفعها للموقع
-        NSSupportsLiveActivities: true
-        NSSupportsLiveActivitiesFrequentUpdates: true
-        UIBackgroundModes: [fetch, processing]
-        BGTaskSchedulerPermittedIdentifiers: [com.orvex.admin.refresh]
+        NSPhotoLibraryUsageDescription: لاختيار الصور التي ترفعها إلى الموقع
         ITSAppUsesNonExemptEncryption: false
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
@@ -64,27 +55,6 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "IconObsidian IconClassic IconWhite IconMist IconSilver IconSteel IconOutline IconOutlineLight IconBlueprint"
         ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
-  OrvexWidgets:
-    type: app-extension
-    platform: iOS
-    sources:
-      - path: OrvexWidgets
-      - path: Shared
-    info:
-      path: OrvexWidgets/Info.plist
-      properties:
-        CFBundleDisplayName: أورفيكس
-        CFBundleShortVersionString: $(MARKETING_VERSION)
-        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        OrvexAPI: $(ORVEX_API)
-        NSExtension:
-          NSExtensionPointIdentifier: com.apple.widgetkit-extension
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.orvex.admin.widgets
-        PRODUCT_NAME: OrvexWidgets
-        TARGETED_DEVICE_FAMILY: "1,2"
-        SKIP_INSTALL: YES
   OrvexUITests:
     type: bundle.ui-testing
     platform: iOS
