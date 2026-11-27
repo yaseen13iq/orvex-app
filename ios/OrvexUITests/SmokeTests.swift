@@ -60,7 +60,7 @@ final class SmokeTests: XCTestCase {
         sleep(3); dismissAlert(a); shot(a, "03-home")
         a.swipeUp(); sleep(1); shot(a, "04-home-b")
         // بعد «لاحقًا» لا تظهر البطاقة عند الفتح التالي
-        a.terminate()
+        sleep(2); XCUIDevice.shared.press(.home); sleep(2); a.terminate()
         let b = app(noUpdate: false); b.launch()
         XCTAssertTrue(b.tabBars.firstMatch.waitForExistence(timeout: 25)); sleep(5)
         log(b.buttons["downloadUpdate"].exists ? "FAIL update card shown again" : "ok update card stays hidden")
@@ -68,6 +68,7 @@ final class SmokeTests: XCTestCase {
         b.terminate()
         let c = app(route: "settings", noUpdate: false); c.launch()
         XCTAssertTrue(ready(c)); sleep(3); shot(c, "05-settings-update")
+        if c.buttons["laterBtn"].exists { log("FAIL card visible on settings launch"); c.buttons["laterBtn"].tap(); sleep(2) }
         let chk = c.buttons["checkUpdate"]
         if chk.waitForExistence(timeout: 5) {
             chk.tap()

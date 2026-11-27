@@ -20,7 +20,7 @@ final class Session: ObservableObject {
     static let skippedKey = "orvex.skippedUpdateBuild"
     /// التحديث المتاح (إن وُجد) بصرف النظر عن «لاحقًا»
     var availableUpdate: JSON? { let u = app["update"]; return (u["build"].int ?? 0) > Bundle.main.build ? u : nil }
-    func skipUpdate(_ u: JSON) { UserDefaults.standard.set(u["build"].int ?? 0, forKey: Session.skippedKey); pendingUpdate = nil }
+    func skipUpdate(_ u: JSON) { UserDefaults.standard.set(u["build"].int ?? 0, forKey: Session.skippedKey); UserDefaults.standard.synchronize(); pendingUpdate = nil }
     /// فحص يدوي للتحديثات من الإعدادات
     func checkForUpdate() async -> JSON? {
         if let r = try? await API.shared.get("/app/boot") { app = r["app"] }
