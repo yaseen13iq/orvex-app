@@ -19,7 +19,7 @@ final class Session: ObservableObject {
 
     static let skippedKey = "orvex.skippedUpdateBuild"
     /// التحديث المتاح (إن وُجد) بصرف النظر عن «لاحقًا»
-    var availableUpdate: JSON? { let u = app["update"]; return (u["build"].int ?? 0) > Bundle.main.build ? u : nil }
+    var availableUpdate: JSON? { let u = app["update"]; if u.isObject, (u["build"].int ?? 0) > Bundle.main.build { return u }; return Optional<JSON>.none }
     /// آخر بناء اختار المستخدم تأجيله («لاحقًا»)
     static var skippedBuild: Int {
         max(UserDefaults.standard.integer(forKey: skippedKey), Int(Vault.get("skippedUpdateBuild") ?? "") ?? 0)
@@ -29,7 +29,7 @@ final class Session: ObservableObject {
         let b = max(app["update"]["build"].int ?? 0, u["build"].int ?? 0)
         UserDefaults.standard.set(b, forKey: Session.skippedKey)
         Vault.set("skippedUpdateBuild", String(b))
-        pendingUpdate = nil
+        pendingUpdate = .none
     }
     /// فحص يدوي للتحديثات من الإعدادات
     func checkForUpdate() async -> JSON? {
@@ -77,8 +77,9 @@ final class Session: ObservableObject {
             let up = app["update"], b = up["build"].int ?? 0
             // لا تظهر البطاقة تلقائيًا مرة أخرى بعد «لاحقًا» إلا إذا كان التحديث إلزاميًا أو صدر بناء أحدث
             let skipped = Session.skippedBuild
-            pendingUpdate = b > Bundle.main.build && (up["mandatory"].isTrue || b > skipped) ? up : nil
-            if ProcessInfo.processInfo.environment["ORVEX_NO_UPDATE"] == "1" { pendingUpdate = nil }
+            // ملاحظة: لا نستخدم «? up : nil» لأن nil هنا قد يتحوّل إلى JSON فارغ بدل «لا شيء»
+            if up.isObject, b > Bundle.main.build, up["mandatory"].isTrue || b > skipped { pendingUpdate = up } else { pendingUpdate = Optional<JSON>.none }
+            if ProcessInfo.processInfo.environment["ORVEX_NO_UPDATE"] == "1" { pendingUpdate = .none }
             phase = .ready
             if let r = ProcessInfo.processInfo.environment["ORVEX_ROUTE"], !r.isEmpty { Router.shared.open(r) }
             startPing()

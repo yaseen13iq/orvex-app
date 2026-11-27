@@ -16,7 +16,7 @@ struct RootView: View {
         }
         .animation(.easeInOut(duration: 0.25), value: session.phase)
         .sheet(isPresented: $confirmer.asking, onDismiss: { if confirmer.asking == false { confirmer.finish(nil) } }) { ConfirmSheet() }
-        .sheet(item: Binding(get: { session.pendingUpdate.map { UpdateItem(u: $0) } }, set: { if $0 == nil, let u = session.pendingUpdate { if u["mandatory"].isTrue { session.pendingUpdate = nil } else { session.skipUpdate(u) } } })) { it in
+        .sheet(item: Binding(get: { session.pendingUpdate.flatMap { $0.isObject ? UpdateItem(u: $0) : nil } }, set: { if $0 == nil, let u = session.pendingUpdate { if u["mandatory"].isTrue { session.pendingUpdate = .none } else { session.skipUpdate(u) } } })) { it in
             UpdateSheet(update: it.u).interactiveDismissDisabled(it.u["mandatory"].isTrue)
         }
         .alert(session.alert?["title"].str ?? "", isPresented: Binding(get: { session.alert != nil && session.pendingUpdate == nil && !confirmer.asking && session.phase == .ready }, set: { if !$0 { session.alert = nil } })) {

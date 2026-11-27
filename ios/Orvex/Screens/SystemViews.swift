@@ -308,7 +308,6 @@ struct SettingsView: View {
             SectionTitle("تحديثات التطبيق")
             Card {
                 InfoRow(title: "نسختك الحالية", value: "\(Bundle.main.version) · بناء \(Fmt.n(Bundle.main.build))")
-                    .accessibilityElement(children: .combine).accessibilityIdentifier("curVer").accessibilityValue(Text(verbatim: "skipped " + String(Session.skippedBuild)))
                 if let u = session.availableUpdate {
                     InfoRow(title: "التحديث المتاح", value: "\(u["version"].str) · بناء \(Fmt.n(u["build"]))")
                 }
