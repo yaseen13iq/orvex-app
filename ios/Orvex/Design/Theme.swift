@@ -34,6 +34,9 @@ final class Prefs: ObservableObject {
         else { locked = false; adminAppearance = nil }
     }
     func reset() { appearance = "system"; westernDigits = true; haptics = true }
+    /// قراءة مباشرة يمكن استخدامها من أي مكان
+    nonisolated static var useWesternDigits: Bool { UserDefaults.standard.object(forKey: "orvex.westernDigits") as? Bool ?? true }
+    nonisolated static var useHaptics: Bool { UserDefaults.standard.object(forKey: "orvex.haptics") as? Bool ?? true }
 }
 
 // MARK: - الألوان (تتبدّل تلقائيًا بين الفاتح والداكن)

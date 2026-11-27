@@ -2,7 +2,7 @@ import SwiftUI
 
 /// تنسيق الأرقام والتواريخ والمدد بالعربية الفصحى
 enum Fmt {
-    static var locale: Locale { Prefs.shared.westernDigits ? Locale(identifier: "ar_IQ@numbers=latn") : Locale(identifier: "ar_IQ") }
+    static var locale: Locale { Prefs.useWesternDigits ? Locale(identifier: "ar_IQ@numbers=latn") : Locale(identifier: "ar_IQ") }
     static let baghdad = TimeZone(identifier: "Asia/Baghdad") ?? .current
 
     static func n(_ v: Double?) -> String {

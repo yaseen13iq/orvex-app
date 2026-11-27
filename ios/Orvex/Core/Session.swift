@@ -159,6 +159,6 @@ final class Confirmer: ObservableObject {
 }
 
 enum Haptics {
-    static func tap() { guard Prefs.shared.haptics else { return }; UIImpactFeedbackGenerator(style: .light).impactOccurred() }
-    static func notify(_ t: UINotificationFeedbackGenerator.FeedbackType) { guard Prefs.shared.haptics else { return }; UINotificationFeedbackGenerator().notificationOccurred(t) }
+    static func tap() { guard Prefs.useHaptics else { return }; UIImpactFeedbackGenerator(style: .light).impactOccurred() }
+    static func notify(_ t: UINotificationFeedbackGenerator.FeedbackType) { guard Prefs.useHaptics else { return }; UINotificationFeedbackGenerator().notificationOccurred(t) }
 }
