@@ -201,7 +201,7 @@ struct UpdateSheet: View {
                         }
                     }
                     if update["mandatory"].isTrue { Note(text: "هذا التحديث إلزامي، ويجب تثبيته لمتابعة استخدام التطبيق.", tone: "warn", icon: "exclamationmark.triangle.fill").padding(.horizontal, -16) }
-                    let notes = update["notes"].str.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+                    let notes = (update["notes"].isArray ? update["notes"].arr.map(\.str) : update["notes"].str.split(separator: "\n").map(String.init)).map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
                     if !notes.isEmpty {
                         Text("ما الجديد").font(.ox(14, .semibold)).foregroundStyle(C.mute)
                         VStack(alignment: .leading, spacing: 12) {
