@@ -308,7 +308,7 @@ struct SettingsView: View {
             SectionTitle("تحديثات التطبيق")
             Card {
                 InfoRow(title: "نسختك الحالية", value: "\(Bundle.main.version) · بناء \(Fmt.n(Bundle.main.build))")
-                    .accessibilityElement(children: .combine).accessibilityIdentifier("curVer").accessibilityValue(Text(verbatim: "skipped " + String(Session.skippedBuild) + " calls " + String(UserDefaults.standard.integer(forKey: "orvex.dbgSkipCalls")) + " last " + (UserDefaults.standard.string(forKey: "orvex.dbgSkipLast") ?? "-") + " boot " + (UserDefaults.standard.string(forKey: "orvex.dbgBoot") ?? "-") + " ud " + String(UserDefaults.standard.integer(forKey: Session.skippedKey)) + " kc " + (Vault.get("skippedUpdateBuild") ?? "-")))
+                    .accessibilityElement(children: .combine).accessibilityIdentifier("curVer").accessibilityValue(Text(verbatim: "skipped " + String(Session.skippedBuild)))
                 if let u = session.availableUpdate {
                     InfoRow(title: "التحديث المتاح", value: "\(u["version"].str) · بناء \(Fmt.n(u["build"]))")
                 }

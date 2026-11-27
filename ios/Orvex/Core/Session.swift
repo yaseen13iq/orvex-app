@@ -25,9 +25,8 @@ final class Session: ObservableObject {
         max(UserDefaults.standard.integer(forKey: skippedKey), Int(Vault.get("skippedUpdateBuild") ?? "") ?? 0)
     }
     func skipUpdate(_ u: JSON) {
-        let b = u["build"].int ?? Int(u["build"].str) ?? 0
-        UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "orvex.dbgSkipCalls") + 1, forKey: "orvex.dbgSkipCalls")
-        UserDefaults.standard.set(u["build"].str + "|" + u["version"].str, forKey: "orvex.dbgSkipLast")
+        // رقم البناء من التحديث المنشور نفسه (مصدره الخادم) أو من البطاقة
+        let b = max(app["update"]["build"].int ?? 0, u["build"].int ?? 0)
         UserDefaults.standard.set(b, forKey: Session.skippedKey)
         Vault.set("skippedUpdateBuild", String(b))
         pendingUpdate = nil
@@ -78,8 +77,6 @@ final class Session: ObservableObject {
             let up = app["update"], b = up["build"].int ?? 0
             // لا تظهر البطاقة تلقائيًا مرة أخرى بعد «لاحقًا» إلا إذا كان التحديث إلزاميًا أو صدر بناء أحدث
             let skipped = Session.skippedBuild
-            UserDefaults.standard.set("b=\(b) skipped=\(skipped) boots=\(UserDefaults.standard.integer(forKey: "orvex.dbgBoots") + 1)", forKey: "orvex.dbgBoot")
-            UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "orvex.dbgBoots") + 1, forKey: "orvex.dbgBoots")
             pendingUpdate = b > Bundle.main.build && (up["mandatory"].isTrue || b > skipped) ? up : nil
             if ProcessInfo.processInfo.environment["ORVEX_NO_UPDATE"] == "1" { pendingUpdate = nil }
             phase = .ready
