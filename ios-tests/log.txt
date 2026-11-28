@@ -3,9 +3,9 @@ OrvexReport: ok update card
 OrvexReport: ok later closed
 OrvexReport: ok update card stays hidden
 OrvexReport: ok manual update check
-Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (84.782 seconds).
+Test Case '-[OrvexUITests.SmokeTests test1_LoginAndUpdate]' passed (90.248 seconds).
 Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' started.
-Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (67.084 seconds).
+Test Case '-[OrvexUITests.SmokeTests test2_Tabs]' passed (77.793 seconds).
 Test Case '-[OrvexUITests.SmokeTests test3_Screens]' started.
 OrvexReport: ok gate
 OrvexReport: ok schedule
@@ -13,3 +13,45 @@ OrvexReport: ok plans
 OrvexReport: ok pricing
 OrvexReport: ok form:vip
 OrvexReport: ok sections
+OrvexReport: ok form:intro
+OrvexReport: ok list:counters
+OrvexReport: ok form:goals
+OrvexReport: ok form:gym
+OrvexReport: ok form:train
+OrvexReport: ok faq
+OrvexReport: ok pages
+OrvexReport: ok form:page-about
+OrvexReport: ok links
+OrvexReport: ok texts
+OrvexReport: ok look
+OrvexReport: ok mood
+OrvexReport: ok seo
+OrvexReport: ok mode
+OrvexReport: ok form:maintenance
+OrvexReport: ok geo
+OrvexReport: ok live
+OrvexReport: ok speed
+OrvexReport: ok waitlist
+OrvexReport: ok cast
+OrvexReport: ok casts
+OrvexReport: ok bot
+OrvexReport: ok users
+OrvexReport: ok history
+OrvexReport: ok log
+OrvexReport: ok files
+OrvexReport: ok app-updates
+OrvexReport: ok app-control
+OrvexReport: ok system
+OrvexReport: ok inbox
+OrvexReport: ok notify-send
+OrvexReport: ok settings
+OrvexReport: ok about
+Test Case '-[OrvexUITests.SmokeTests test3_Screens]' passed (541.786 seconds).
+Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' started.
+OrvexReport: ok saved
+Test Case '-[OrvexUITests.SmokeTests test4_EditAndSave]' passed (32.790 seconds).
+Test Case '-[OrvexUITests.SmokeTests test5_Dark]' started.
+Test Case '-[OrvexUITests.SmokeTests test5_Dark]' passed (27.615 seconds).
+Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' started.
+Test Case '-[OrvexUITests.SmokeTests test6_UserEditor]' passed (21.494 seconds).
+** TEST SUCCEEDED **
